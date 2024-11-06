@@ -1,0 +1,123 @@
+.filter-bar {
+    height: 35px;
+    margin: 0 auto 28px;
+    padding: 10px 0;
+    width: calc(100% + 40px);
+    transform: translate(-40px, -20px);
+  }
+  
+  .filter-bar__container-desktop {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 8px;
+}
+  
+  .filter-bar__left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .filter-bar__right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .filter-bar__filter-button {
+    border: none;
+    font-family: Cabinet Grotesk;
+    height: 20px;
+    width: min-content;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    padding: 2px 6px 2px 2px;
+    color: #521F63;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .filter-bar__filter-arrow-icon {
+    margin: 0 6px;
+  }
+  
+  .filter-bar__container-mobile {
+    display: none;
+  }
+  
+  .filter-bar__user-name {
+    margin-right: 12px;
+    font-family: Cabinet Grotesk;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.8px;
+    text-align: left;
+  }
+  
+  .filter-bar__user-image {
+    cursor: pointer;
+  }
+  
+  .filter-bar__profile-button {
+    border: none;
+    background-color: white;
+    height: 44px;
+    width: 44px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .filter-bar__profile-button-image {
+    position: center;
+  }
+  
+  .filter-bar__top {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .filter-bar__bottom {
+    display: content;
+  }
+  
+  @media screen and (max-width: 500px) {
+    .filter-bar {
+      min-width: 343px;
+      margin: 18px auto 32px auto;
+      height: min-content;
+    }
+  
+    .filter-bar__logo {
+      margin: 0;
+    }
+  
+    .filter-bar__container-desktop {
+      display: none;
+    }
+  
+    .filter-bar__container-mobile {
+      display: flex;
+      flex-direction: column;
+      row-gap: 32px;
+    }
+  
+    .filter-bar__profile-container-visible {
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+      min-height: 208px;
+    }
+  }
+  

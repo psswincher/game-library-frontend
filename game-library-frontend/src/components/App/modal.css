@@ -1,0 +1,59 @@
+.modal {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  transition: visibility, 0.6s, ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.modal_open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__content {
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 1);
+  height: min-content;
+  width: clamp(45ch, 50%, 75ch);
+  border-radius: 8px;
+  padding: 28px 28px 36px 28px;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.modal__close-button {
+  border: none;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 20.79px;
+  cursor: pointer;
+}
+
+.modal__close-icon {
+  width: 21.21px;
+  height: 21.41px;
+}
+
+.modal__title {
+  margin: 0;
+  margin-bottom: 32px;
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 20px;
+}

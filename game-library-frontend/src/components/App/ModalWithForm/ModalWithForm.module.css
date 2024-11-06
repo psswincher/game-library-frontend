@@ -1,0 +1,75 @@
+@import "../modal.css";
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.modal__label {
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  display: block;
+}
+
+.modal__input {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+  width: 100%;
+  display: block;
+  margin-top: 8px;
+}
+
+.modal__radio-buttons {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.modal__legend {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  justify-content: left;
+}
+
+.modal__radio-input {
+  margin-right: 15px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__label_type_radio {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__radio-input:checked + span {
+  color: rgba(0, 0, 0, 1);
+}
+
+.modal__submit {
+  width: 100%;
+  border: none;
+  height: 44px;
+  padding: 12px 0px 12px 0px;
+  border-radius: 4px 0px 0px 0px;
+  opacity: 0px;
+  margin: 30px 0 0 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 1);
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.modal__submit:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+@media screen and (max-width: 500px) {
+  .modal {
+    width: 100%;
+  }
+}
