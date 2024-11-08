@@ -9,28 +9,32 @@ import styleAddGarmentModal from "./components/App/ModalWithForm/ModalWithForm.m
 import ItemModal from "./components/App/ItemModal/ItemModal";
 import UserProfile from "./components/App/UserProfile/UserProfile"
 import FilterBar from "./components/App/FilterBar/FilterBar";
-//import fetchLibrary from "./utils/libraryApi.js";
+import {Api} from "./utils/api.js";
 import userImage from "./assets/terrence-user-image.png";
+
 
 function App() {
   const user = { name: "Terrence Tegegne", image: userImage };
   const [activeModal, setActiveModal] = useState("");
   const [activeCard, setActiveCard] = useState({});
   const [userProfileVisible, setUserProfileVisible] = useState(false);
+  const [gameLibrary, setGameLibrary] = useState({});
+  const gamesData = new GameLibrary;
+  const api = new Api(apiInfo.baseUrl);
 
-  // useEffect(
-  //   () =>
-  //     async function fetchData() {
-  //       fetchLibrary().then((res) => {
-  //         // setWeatherState(res.mainWeather);
-  //         // setDayState(res.dayOrNight);
-  //         // setTemperature(res.temperature);
-  //         // setCityName(res.city);
-  //         // setDateString(res.dateString);
-  //         // setTempFeel(res.tempFeel);
-  //       });
-  //     }
-  // );
+  useEffect(
+    () =>
+      async function fetchData() {
+        if (gamesData.exists === false) {
+          api.getGames().then((res) => {
+            console.log(res);
+            setGameLibrary(res);
+            console.log(gameLibrary);
+          });      
+        } 
+        
+      }
+  );
 
   const closeActiveModal = () => setActiveModal("");
   const onProfileClick = () => setUserProfileVisible(true);

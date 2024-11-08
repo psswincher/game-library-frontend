@@ -19,8 +19,9 @@ export const defaultGames = [
     image: "https://vigilantebar.com/wp-content/uploads/2022/08/Agricola.jpg",
     weight: "middleweight",
     players: "2-4"
-  },
-
-
-  
+  }, 
 ]
+
+export const apiInfo = {
+  baseUrl: "http://localhost:3001/",
+};

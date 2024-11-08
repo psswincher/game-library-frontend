@@ -2,7 +2,7 @@ import "./SectionItemCards.css";
 import { defaultGames } from "../../../../utils/constants";
 import ItemCard from "../ItemCard/ItemCard";
 
-function SectionItemCards({ onItemClick, itemWeight, title, subtitle }) {
+function SectionItemCards({ onItemClick, itemWeight, title, subtitle, gameLibrary }) {
   return (
     <section className="item-cards">
       <div className="item-cards__header-container">
