@@ -1,0 +1,27 @@
+.filter-hero-button__list-container {
+  list-style-type: none;
+  height: 40px;
+}
+
+.filter-hero-button__button {
+  border: none;
+  min-height: 45px;
+  width: 140px;
+  font: var(--font-sectionHeading);
+  padding: 8px 12px 4px 4px;
+  color: black;
+  background-color: var(--color-styleWhite);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 1s ease;
+  text-align: center;
+}
+
+.filter-hero-button__button:hover {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+
+.filter-hero-button__on {
+  background-color: var(--color-accent);
+}

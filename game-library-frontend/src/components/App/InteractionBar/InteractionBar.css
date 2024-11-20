@@ -1,0 +1,23 @@
+.interaction-bar {
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  width: max-content;
+  align-items: center;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  padding: 6px 12px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.interaction-bar__button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.interaction-bar__button:hover {
+  transform: translateY(-3px);
+}

@@ -1,0 +1,33 @@
+.no-games-card__container {
+  margin: 0 40px;
+  padding: 10px 10px;
+  width: calc(198px * 2);
+  height: 198px;
+  background-color: var(--color-secondary);
+  border-radius: 10px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: top;
+  box-sizing: border-box;
+  transition: var(--button-hover-transition);
+  cursor: pointer;
+}
+
+.no-games-card__container:hover {
+  transform: var(--button-hover-transform);
+  box-shadow: var(--button-hover-box-shadow);
+}
+
+.no-games-card__title {
+  font: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.no-games-card__description {
+  font: var(--font-subheading);
+  color: var(--color-styleWhite);
+}
+
+@media screen and (max-width: 500px) {
+}

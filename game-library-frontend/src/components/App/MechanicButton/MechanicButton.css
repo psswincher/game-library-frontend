@@ -1,0 +1,30 @@
+.mechanic-button {
+  margin: 0;
+  padding: 2px 6px;
+  height: 16px;
+  width: max-content;
+  background-color: white;
+  border: 0.25px solid #0000004d;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  list-style-type: none;
+}
+
+.mechanic-button_text {
+  color: black;
+  font-family: afacad;
+  /* font-weight: 700; */
+  font-size: 12px;
+  text-align: center;
+}
+/* 
+.item-card_modal {
+  position: relative;
+  margin: auto auto;
+  transform: translate(-50% -50%);
+  height: 50%;
+  width: 50%;
+  z-index: 2;
+} */

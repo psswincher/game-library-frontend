@@ -1,4 +1,4 @@
-@import "../modal.css";
+@import "../modal/Modal.css";
 
 .modal__form {
   display: flex;
@@ -26,6 +26,12 @@
   border: none;
   margin: 0;
   padding: 0;
+}
+
+.modal__button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
 }
 
 .modal__legend {

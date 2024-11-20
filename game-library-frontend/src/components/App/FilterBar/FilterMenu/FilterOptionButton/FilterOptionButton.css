@@ -1,0 +1,22 @@
+.filter-option-button__list-container {
+  list-style-type: none;
+}
+
+.filter-option-button__button {
+  border: none;
+  height: min-content;
+  width: max-content;
+  font: var(--font-smallText);
+  text-align: left;
+  padding: 4px 6px 4px 4px;
+  color: black;
+  background-color: var(--color-styleWhite);
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: background-color 1s ease;
+}
+
+.filter-option-button__on {
+  background-color: var(--color-accent);
+}

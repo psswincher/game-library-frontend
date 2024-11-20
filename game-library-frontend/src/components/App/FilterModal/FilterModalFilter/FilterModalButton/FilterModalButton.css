@@ -1,0 +1,23 @@
+.filter-modal-button {
+  list-style-type: none;
+  border: none;
+  padding: 8px 12px;
+  font: var(--font-smallButton);
+  text-align: center;
+  color: black;
+  background-color: var(--color-styleWhite);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.5s ease,
+    transform var(--button-hover-transition),
+    box-shadow var(--button-hover-transition);
+}
+
+.filter-modal-button:hover {
+  transform: var(--button-hover-transform);
+  box-shadow: var(--button-hover-box-shadow);
+}
+
+.filter-modal-button.filter-modal-button__on {
+  background-color: var(--color-accent);
+}

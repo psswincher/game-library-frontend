@@ -1,0 +1,29 @@
+.filter-modal-filter__list-container {
+  list-style-type: none;
+  width: 100%;
+}
+
+.filter-modal-filter__title {
+  font: var(--font-subheading);
+  color: var(--color-font-white);
+  width: 150px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 4px;
+}
+
+.filter-modal-filter__options {
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  flex-direction: row;
+  flex-flow: wrap;
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+
+  justify-content: left;
+}

@@ -1,0 +1,5 @@
+.search-bar {
+  background-color: var(--color-styleWhite);
+  font: var(--font-darkParagraph);
+  border-radius: 8px;
+}

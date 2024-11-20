@@ -1,0 +1,106 @@
+.modal {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.modal__wrapper {
+  margin: 0 auto;
+  padding: 32px 24px;
+  box-sizing: border-box;
+  height: min-content;
+  width: clamp(45ch, 50%, 300ch);
+  border-radius: 8px;
+  position: relative;
+  background-color: var(--color-primary-semiTransparent);
+  box-shadow: 2px 6px 8px rgb(0 0 0 / 35%);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.modal__close-button {
+  border: none;
+  background-color: var(--color-styleWhite);
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  border: 2px outset black;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  cursor: pointer;
+}
+
+.modal__close-button_header-image {
+  top: 20.79px;
+}
+
+.modal__close-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.modal__title {
+  margin: 0;
+  margin-bottom: 32px;
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.modal__button {
+  width: max-content;
+  height: max-content;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: var(--color-secondary);
+  border: var(--border-standard-button);
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  font: var(--font-smallButton);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.modal__button:hover {
+  background-color: var(--color-accent);
+}
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.modal__label {
+  font: var(--font-sectionHeading);
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.modal__input {
+  background-color: var(--color-styleWhite);
+  font: var(--font-darkParagraph);
+  border-radius: 8px;
+}
+
+.modal__button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  column-gap: 16px;
+}

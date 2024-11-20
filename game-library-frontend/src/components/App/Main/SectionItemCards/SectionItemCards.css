@@ -1,18 +1,21 @@
-.item-cards__container {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.item-cards {
+  /* padding: 0 20px; */
+  height: 250px;
+  overflow: hidden;
 }
+
 .item-cards__list {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  
-  grid-template-columns: repeat(auto-fill, calc(100vw * .165));
-  
-  /* grid-template-columns: repeat(auto-fill, minmax(calc(100vw * .165), 1fr)); */
-  row-gap: 35px;
+  display: flex;
+  flex-direction: row;
+  /* width: 100%; */
+  position: absolute;
+  left: 0;
+  top: 10px;
+  height: 200px;
+  /* overflow: hidden; */
   column-gap: 8px;
 }
 
@@ -22,19 +25,81 @@
   column-gap: 12px;
   align-items: baseline;
   margin: 0 0 8px;
+  padding: 0 20px;
 }
 
 .item-cards__header-title {
-font-family: Afacad;
-font-size: 24px;
+  font-family: Afacad;
+  font-size: 24px;
 }
 
 .item-cards__header-subtitle {
   font-family: Afacad;
   font-size: 12px;
+  width: max-content;
+  white-space: nowrap;
 }
 
-@media screen and (max-width: 500px) {
+.item-cards__progress-bar {
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    rgba(74, 186, 183, 1) 39%,
+    rgba(74, 186, 183, 0) 100%
+  );
+}
+
+.item-cards__container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+  align-items: center;
+  position: relative;
+}
+
+.item-cards__button {
+  cursor: pointer;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  opacity: 0.1;
+  z-index: 1;
+  border-radius: 8px;
+  top: 100px;
+}
+
+.item-cards:hover .item-cards__button {
+  opacity: 0.75;
+}
+
+.item-cards__button:hover {
+  opacity: 1 !important;
+}
+
+.item-cards__next {
+  right: 0;
+}
+
+.item-cards__prev {
+  transform: rotate(180deg);
+}
+
+.item-cards__prev:hover {
+  transform: rotate(180deg);
+}
+
+.item-cards__arrow-image {
+  height: 40px;
+}
+
+.item @media screen and (max-width: 500px) {
   .item-cards__list {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     row-gap: 16px;

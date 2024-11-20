@@ -1,0 +1,153 @@
+.hero-item-card {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-styleWhite);
+  border-radius: 8px;
+  position: relative;
+  /* overflow: visible; */
+}
+
+.hero-item-card_on {
+  background: linear-gradient(
+    90deg,
+    rgba(74, 186, 183, 1) 18%,
+    rgba(242, 242, 237, 1) 67%
+  );
+}
+
+.hero-item-card__image {
+  min-width: 360px;
+  max-height: 360px;
+  border-radius: 8px;
+  margin: 0 16px 0 0;
+}
+
+.hero-item-card__content {
+  padding: 12px;
+  box-sizing: border-box;
+  color: var(--color-background);
+  display: flex;
+  flex-direction: row;
+}
+.hero-item-card__game-base-data {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: space-between;
+}
+
+.hero-item-card__data {
+  color: var(--color-primary);
+  font: var(--font-subheading-itemCards);
+}
+
+.hero-item-card__right {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: baseline;
+  font: var(--font-sectionHeading);
+  color: var(--color-primary);
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* overflow: hidden; */
+}
+
+.hero-item-card__game-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.hero-item-card__descriptions {
+  padding: 0;
+  width: 100%;
+}
+
+.hero-item-card:hover {
+  transform: var(--button-hover-transform);
+  box-shadow: var(--button-hover-box-shadow);
+}
+
+.hero-item-card__title {
+  margin: 0;
+  padding: 0;
+  color: var(--color-background);
+  font: var(--font-heading-itemCards);
+  font-size: 60px;
+  line-height: 70px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+.hero-item-card__game-short-description {
+  font: var(--font-darkParagraph);
+  color: black;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.hero-item-card__game-full-description {
+  font: var(--font-darkParagraph);
+  color: black;
+  padding: 12px 0 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
+  line-clamp: 8;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.hero-item-card__game-base-data {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hero-item-card__game-data {
+  color: var(--color-primary);
+  font-family: afacad;
+  font-weight: regular;
+  font-size: 16px;
+  font: var(--font-sectionHeading);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hero-item-card__game_mechanics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 12px;
+  margin-top: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .hero-item-card {
+    max-height: 120px;
+    min-width: 120px;
+  }
+
+  .hero-item-card__name-container {
+    margin-top: 7px;
+  }
+
+  .hero-item-card__image {
+    min-width: 120px;
+    width: 100%;
+    max-height: 120px;
+  }
+
+  .hero-item-card__title {
+    font-size: 1rem;
+  }
+}

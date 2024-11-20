@@ -1,21 +1,55 @@
-@import "../modal.css";
+@import "../Modal/Modal.css";
 
 .modal__content {
-  padding: 0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
   overflow: hidden;
   max-width: 498px;
-  max-height: 610px;
+  max-height: 629px;
+  background-color: #521f63;
+  border-color: black;
+  border-width: 3px;
+  box-sizing: border-box;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 2px 6px 8px rgb(0 0 0 / 35%);
+  z-index: 2;
 }
 
 .modal__image {
   width: 100%;
+  max-height: 450px;
+  margin: 0 0 12px;
+  border-radius: 8px;
+}
+
+.modal__top {
+  margin: 0;
+  padding: 0;
 }
 
 .modal__title {
   margin: 0;
+}
+
+.modal__game_data {
+  color: #f2f2ed;
+  color: var(--color-styleWhite);
+  font-family: afacad;
+  font-weight: regular;
+  font-size: 16px;
+  font: var(--font-sectionHeading);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.modal__bottom {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
 }
 
 .modal__close-button {
@@ -30,4 +64,17 @@
   row-gap: 12px;
   margin: 0;
   padding: 0 0 32px 32px;
+}
+
+.modal__game_mechanics {
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  align-items: flex-start;
+}
+
+.modal__game_shortDescription {
+  font-family: afacad;
+  font-size: 14px;
+  line-height: 16px;
 }

@@ -1,0 +1,48 @@
+.button {
+  list-style-type: none;
+  border: none;
+  padding: 8px 12px;
+
+  background-color: var(--color-styleWhite);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button__text {
+  font: var(--font-smallButton);
+  text-align: center;
+  color: black;
+  background-color: transparent;
+}
+
+.button.button_secondary {
+  background-color: var(--color-accent);
+}
+
+.button.button_mechanic {
+  margin: 0;
+  padding: 2px 6px;
+  height: 16px;
+  width: max-content;
+  background-color: var(--color-styleWhite);
+  border: 0.25px solid #0000004d;
+  border-radius: 4px;
+}
+
+.button__text.button_mechanic {
+  font: var(--font-smallText-mechanic);
+  text-align: center;
+  background-color: transparent;
+}
+
+.button:hover {
+  background-color: var(--color-secondary);
+}
+
+.button.button_on {
+  background-color: var(--color-accent);
+}

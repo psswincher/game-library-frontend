@@ -1,22 +1,4 @@
 @font-face {
-  font-family: "Cabinet Grotesk";
-  src: url("./fonts/CabinetGrotesk-Regular.woff2") format("woff2");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Cabinet Grotesk";
-  src: url("./fonts/CabinetGrotesk-Medium.woff2") format("woff2");
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: "Cabinet Grotesk";
-  src: url("./fonts/CabinetGrotesk-Bold.woff2") format("woff2");
-  font-weight: 600;
-}
-
-@font-face {
   font-family: "Afacad";
   src: url("./fonts/Afacad-Regular.ttf") format("truetype");
   font-weight: 400;
@@ -24,12 +6,12 @@
 
 @font-face {
   font-family: "Afacad";
-  src: url("./fonts/Afacad-Regular.ttf") format("truetype");
+  src: url("./fonts/Afacad-SemiBold.ttf") format("truetype");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Afacad";
-  src: url("./fonts/Afacad-Regular.ttf") format("truetype");
+  src: url("./fonts/Afacad-Bold.ttf") format("truetype");
   font-weight: 600;
 }
