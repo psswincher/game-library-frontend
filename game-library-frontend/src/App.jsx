@@ -3,12 +3,9 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/App/Header/Header";
 import Main from "./components/App/Main/Main";
-import ModalWithForm from "./components/App/ModalWithForm/ModalWithForm";
 import Footer from "./components/App/Footer/Footer";
 import FilterModal from "./components/App/FilterModal/FilterModal";
-import UserProfile from "./components/App/UserProfile/UserProfile";
 import Api from "./utils/api.js";
-import userImage from "./assets/terrence-user-image.png";
 import { apiInfo } from "./utils/constants.js";
 import { AppContext } from "./contexts/AppContext.jsx";
 import { GameLibraryContext } from "./contexts/GameLibraryContext.jsx";
@@ -17,57 +14,66 @@ import { GameFilterContextProvider } from "./hooks/useGameFilter.jsx";
 import { IsLoggedInContext } from "./contexts/IsLoggedInContext.jsx";
 import RegisterModal from "./components/App/RegisterModal/RegisterModal.jsx";
 import LoginModal from "./components/App/LoginModal/LoginModal.jsx";
-// import useSearchBar from "./hooks/useSearchBar.jsx";
+import { useGameLibrary } from "./hooks/useGameLibrary.jsx";
+import useApi from "./hooks/useApi.jsx";
 import { useUserManager } from "./hooks/useUserManager.jsx";
 import { useModal } from "./hooks/useModal.jsx";
+import { getToken, setToken } from "./utils/token.js";
 
-import gameLibraryFilterDecorator from "./utils/gameLibraryFilterDecorator.js";
 import ProfileModal from "./components/App/ProfileModal/ProfileModal.jsx";
-import { nullUser } from "./utils/constants.js";
 const api = new Api(apiInfo.baseUrl);
 
 function App() {
   const [userProfileVisible, setUserProfileVisible] = useState(false);
-  const [gameLibrary, setGameLibrary] = useState([]);
   const [searchedGameLibrary, setSearchedGameLibrary] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
 
   const {
+    gameLibrary,
+    setGameLibrary,
+    initializeLibrary,
+    updateLibraryGameWanted,
+    updateLibraryGamePlayed,
+    updateLibraryGameLiked,
+  } = useGameLibrary();
+
+  const {
+    getGames,
+    addUserWantGame,
+    removeUserWantGame,
+    removeUserPlayedGame,
+    addUserPlayedGame,
+    addUserLikedGame,
+    removeUserLikedGame,
+  } = useApi(apiInfo.baseUrl);
+
+  const {
     handleSignUp,
     userLikesGame,
     handleLogin,
-    handleLikeGame,
-    handleUnlikeGame,
     userPlayedGame,
     userPlayedGames,
-    handlePlayedGame,
-    handleUnplayedGame,
     isLoggedIn,
     currentUser,
     handleLogout,
     userLikedGames,
     userWantsGame,
     userWantedGames,
-    handleWantGame,
-    handleUnwantGame,
+    updateUserWantedGames,
+    updateUserLikedGames,
+    updateUserPlayedGames,
   } = useUserManager(api);
 
-  const { isOpen, activeModal, setActiveModal, closeActiveModal } = useModal();
+  const { isOpen, setActiveModal, closeActiveModal } = useModal();
 
   useEffect(() => {
-    function fetchData() {
-      api
-        .getGames()
-        .then((res) => {
-          gameLibraryFilterDecorator(res.data);
-          setGameLibrary(res.data);
-          setSearchedGameLibrary(res.data);
-        })
-        .catch(console.error);
-    }
-    fetchData();
+    handleRequests(getGames(), [initializeLibrary]);
   }, []);
+
+  useEffect(() => {
+    setSearchedGameLibrary(gameLibrary);
+  }, [gameLibrary]);
 
   const onSignUp = ({ name, email, avatar, password }) => {
     const user = { name, email, avatar, password };
@@ -88,9 +94,26 @@ function App() {
     setActiveModal("login-modal");
   };
 
-  function handleRequest(request) {
-    setIsLoading(true);
+  const handleRequest = (request, callbacks = []) => {
     request()
+      .then((response) => {
+        callbacks.forEach((callback) => callback(response));
+      })
+      .catch(console.error);
+  };
+
+  function handleRequests(apiCall, resultHandlers = [], otherHandlers = []) {
+    setIsLoading(true);
+    apiCall()
+      .then((result) => {
+        if (resultHandlers.length > 0) {
+          resultHandlers.forEach((fn) => fn(result));
+        }
+
+        if (otherHandlers.length > 0) {
+          otherHandlers.forEach((fn) => fn());
+        }
+      })
       .then(closeActiveModal)
       .catch(console.error)
       .finally(() => setIsLoading(false));
@@ -98,28 +121,52 @@ function App() {
 
   const onLikeGameClick = (game) => {
     if (userLikesGame(game)) {
-      return handleRequest(handleUnlikeGame({ gameId: game._id }));
+      return handleRequests(
+        removeUserLikedGame({ gameId: game._id, token: getToken() }),
+        [updateUserLikedGames],
+        [() => updateLibraryGameLiked(game)]
+      );
     } else {
-      return handleRequest(handleLikeGame({ gameId: game._id }));
+      return handleRequests(
+        addUserLikedGame({ gameId: game._id, token: getToken() }),
+        [updateUserLikedGames],
+        [() => updateLibraryGameLiked(game)]
+      );
     }
   };
 
   const onPlayedGameClick = (game) => {
     if (userPlayedGame(game)) {
-      return handleRequest(handleUnplayedGame({ gameId: game._id }));
+      return handleRequests(
+        removeUserPlayedGame({ gameId: game._id, token: getToken() }),
+        [updateUserPlayedGames],
+        [() => updateLibraryGamePlayed(game)]
+      );
     } else {
-      return handleRequest(handlePlayedGame({ gameId: game._id }));
+      return handleRequests(
+        addUserPlayedGame({ gameId: game._id, token: getToken() }),
+        [updateUserPlayedGames],
+        [() => updateLibraryGamePlayed(game)]
+      );
     }
   };
-
+  //BOOM! We have decoupled user management, game library management, and API call
+  //while staying dry by wrapping them in a shared function that handles errors etc
   const onWantsGameClick = (game) => {
     if (userWantsGame(game)) {
-      return handleRequest(handleUnwantGame({ gameId: game._id }));
+      return handleRequests(
+        removeUserWantGame({ gameId: game._id, token: getToken() }),
+        [updateUserWantedGames],
+        [() => updateLibraryGameWanted(game)]
+      );
     } else {
-      return handleRequest(handleWantGame({ gameId: game._id }));
+      return handleRequests(
+        addUserWantGame({ gameId: game._id, token: getToken() }),
+        [updateUserWantedGames],
+        [() => updateLibraryGameWanted(game)]
+      );
     }
   };
-  const closeUserProfile = () => setUserProfileVisible(false);
 
   const onItemClick = (item) => {
     if (item.isClicked) {
@@ -166,6 +213,8 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   onSignUpClick={onSignUpClick}
                   onLoginClick={onLoginClick}
+                  onFilterClick={onFilterClick}
+                  activeFilter={activeFilter}
                 />
                 <div className="page__content">
                   <Main

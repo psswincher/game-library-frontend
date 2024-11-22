@@ -52,6 +52,7 @@
 .image-item-card__data {
   color: var(--color-primary);
   font: var(--font-subheading-itemCards);
+  letter-spacing: 0.02em;
 }
 
 .image-item-card:hover {

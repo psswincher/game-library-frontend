@@ -80,9 +80,10 @@ function FilterHeroCarousel() {
               {currentFilter.options.map((option) => {
                 return (
                   <Button
+                    disabled
                     key={option}
                     text={option}
-                    isActive={isOptionActive(currentFilter.name, option)}
+                    isOn={isOptionActive(currentFilter.name, option)}
                     onClick={() => {
                       if (!isFilterActive(currentFilter.name)) {
                         setTimeout(() => {
@@ -91,7 +92,8 @@ function FilterHeroCarousel() {
                       }
                       onFilterOptionClick(currentFilter.name, option);
                     }}
-                    variant={currentFilter.buttonVariant}
+                    style={currentFilter.buttonStyle}
+                    size="large"
                   />
                 );
               })}

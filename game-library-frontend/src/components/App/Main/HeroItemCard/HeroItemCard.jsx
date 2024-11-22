@@ -2,7 +2,6 @@ import { useContext } from "react";
 import "./HeroItemCard.css";
 import GameImage from "../../GameImage/GameImage";
 import InteractionBar from "../../InteractionBar/InteractionBar";
-import { CurrentUserContext } from "../../../../contexts/CurrentUserContext";
 import { IsLoggedInContext } from "../../../../contexts/IsLoggedInContext";
 import { GameFilterContext } from "../../../../contexts/GameFilterContext";
 import Button from "../../Buttons/Button";
@@ -13,8 +12,7 @@ function HeroItemCard({ item, onItemClick, onItemCardClick, isFavorite }) {
   }
 
   const { isLoggedIn } = useContext(IsLoggedInContext);
-  const { isFilterActive, onFilterOptionClick, isOptionActive } =
-    useContext(GameFilterContext);
+  const { onFilterOptionClick, isOptionActive } = useContext(GameFilterContext);
 
   return (
     <li
@@ -54,10 +52,11 @@ function HeroItemCard({ item, onItemClick, onItemCardClick, isFavorite }) {
                   // return <MechanicButton key={index} mechanic={mechanic} />;
                   return (
                     <Button
-                      variant="mechanic"
+                      style="mechanic"
+                      size="smallest"
                       text={mechanic}
                       key={index}
-                      isActive={isOptionActive("Mechanics", mechanic)}
+                      isOn={isOptionActive("Mechanics", mechanic)}
                       onClick={() => onFilterOptionClick("Mechanics", mechanic)}
                     />
                   );
@@ -66,7 +65,7 @@ function HeroItemCard({ item, onItemClick, onItemCardClick, isFavorite }) {
           </div>
         </div>
       </div>
-      {isLoggedIn && isFavorite && <InteractionBar game={item} />}
+      {isLoggedIn && <InteractionBar game={item} />}
     </li>
   );
 }

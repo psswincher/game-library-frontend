@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./SectionTextItemCards.css";
 import { useGameFilters } from "../../../../hooks/useGameFilter";
@@ -10,36 +11,84 @@ function SectionItemCards({ onItemClick, onFilterModalClick }) {
     onItemClick,
   });
 
+  const memoizedGridSpans = useMemo(() => {
+    return filteredGames.map((game) => {
+      return {
+        id: game._id,
+        gridSpan: getGridSpan(game),
+        columnSpan: getColumnSpan(game),
+      };
+    });
+  }, [filteredGames, getGridSpan, getColumnSpan]);
+
   const itemVariants = {
-    hidden: { x: 100, opacity: 0 },
-    visible: { x: 0, opacity: 1 },
-    exit: { x: -100, opacity: 0 },
+    hidden: {
+      opacity: 0,
+      scaleX: 0,
+      originX: 0.5,
+    },
+    visible: {
+      opacity: 1,
+      scaleX: 1,
+      originX: 0.5,
+      transition: {
+        scaleX: {
+          type: "tween",
+          duration: 0.3,
+          delay: 0.3,
+        },
+      },
+      exit: {
+        scaleX: 0,
+        originX: 0.5,
+        transition: {
+          scaleX: {
+            type: "tween",
+            duration: 0.3,
+          },
+        },
+      },
+    },
   };
 
   return (
     <section className="text-item-cards">
       <motion.div className="text-item-cards__list">
-        <AnimatePresence initial={false} mode="popLayout">
+        <AnimatePresence mode="sync">
           {filteredGames.length > 0
-            ? filteredGames.map((item) => (
-                <motion.div
-                  key={item._id}
-                  layout
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ type: "spring", stiffness: 250, damping: 25 }}
-                  style={{
-                    gridRow: getGridSpan(item),
-                    gridColumn: getColumnSpan(item),
-                    height: "100%",
-                    width: "100%",
-                  }}
-                >
-                  {fetchCard(item)}
-                </motion.div>
-              ))
+            ? filteredGames.map((item) => {
+                const { gridSpan, columnSpan } = memoizedGridSpans.find(
+                  (span) => span.id === item._id
+                );
+                const key = item._id + gridSpan + columnSpan;
+                console.log(key);
+                return (
+                  <motion.div
+                    key={key}
+                    layout="position"
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{
+                      layout: {
+                        type: "tween",
+                        duration: 0.4,
+                        delay: 0.25,
+                        ease: "easeInOut",
+                      },
+                    }}
+                    style={{
+                      gridRow: gridSpan,
+                      gridColumn: columnSpan,
+                      height: "100%",
+                      width: "100%",
+                    }}
+                  >
+                    {fetchCard(item)}
+                  </motion.div>
+                );
+              })
             : ""}
         </AnimatePresence>
         {filteredGames.length === 0 ? (

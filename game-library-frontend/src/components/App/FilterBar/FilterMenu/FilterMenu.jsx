@@ -1,8 +1,9 @@
 import "./FilterMenu.css";
+import { motion } from "framer-motion";
 import dropdownArrowIcon from "../../../../assets/dropdown-arrow-icon.svg";
 import FilterOptionButton from "./FilterOptionButton/FilterOptionButton";
 import { useGameFilters } from "../../../../hooks/useGameFilter";
-
+import Button from "../../Buttons/Button";
 function FilterMenu({ gameFilter, onFilterClick, activeFilter }) {
   const {
     isFilterActive,
@@ -17,46 +18,65 @@ function FilterMenu({ gameFilter, onFilterClick, activeFilter }) {
   function handleFilterClick() {
     onFilterClick(gameFilter.name);
   }
+
+  const listVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.75,
+        staggerChildren: 0.03,
+      },
+    },
+  };
+
+  const itemVariants = {
+    visible: {
+      opacity: 1,
+      x: 0,
+    },
+    hidden: { opacity: 0, x: -50 },
+  };
   return (
-    <li
-      className="filter-menu__list-container"
-      style={{ width: `calc(90% / ${filterCount()})` }}
+    <div
+      className={`filter-menu__list-container ${
+        isOpen && "filter-menu__open"
+      } ${isActive ? "filter-menu__active" : ""}`}
+      onClick={handleFilterClick}
     >
-      <div
-        className={`filter-menu__button ${isOpen ? "filter-menu__open" : ""} ${
-          isActive ? "filter-menu__active" : ""
-        }
-         `}
-        role="button"
-        onClick={handleFilterClick}
-      >
-        <div className="filter-menu__title">
-          <img
-            className={`filter-menu__filter-arrow-icon ${
-              isOpen ? "filter-menu__open" : ""
-            }`}
-            src={dropdownArrowIcon}
-          />
-          {getFilterTitle(gameFilter)}
-        </div>
-        <div
-          className={`filter-menu__options ${
+      <div className="filter-menu__title">
+        <img
+          className={`filter-menu__filter-arrow-icon ${
             isOpen ? "filter-menu__open" : ""
           }`}
-        >
-          {gameFilter.options.map((option) => {
-            return (
-              <FilterOptionButton
-                key={option}
-                option={option}
-                isActive={isOptionActive(gameFilter.name, option)}
-                onClick={() => onFilterOptionClick(activeFilter, option)}
-              />
-            );
-          })}
+          src={dropdownArrowIcon}
+        />
+        <div className="filter-menu__title-text">
+          {getFilterTitle(gameFilter)}
         </div>
       </div>
-    </li>
+      <motion.ul
+        className={`filter-menu__options ${isOpen ? "filter-menu__open" : ""}`}
+        initial="hidden"
+        animate={isOpen ? "visible" : "hidden"}
+        variants={listVariants}
+      >
+        {gameFilter.options.map((option, index) => {
+          return (
+            <motion.li key={index} variants={itemVariants}>
+              <Button
+                text={option}
+                isOn={isOptionActive(gameFilter.name, option)}
+                onClick={() => onFilterOptionClick(activeFilter, option)}
+                isOpen={isOpen}
+                style="secondary"
+                size="regular"
+              />
+            </motion.li>
+          );
+        })}
+      </motion.ul>
+    </div>
   );
 }
 

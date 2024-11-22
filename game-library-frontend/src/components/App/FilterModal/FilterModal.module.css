@@ -10,7 +10,7 @@
   overflow: hidden;
   border-radius: 8px;
   width: 100%;
-  height: 100%;
+  height: 80vh;
 }
 
 .modal__titleBar {
@@ -22,7 +22,6 @@
 
 .modal__title {
   font: var(--font-heading);
-  font-size: 2rem;
   color: var(--color-secondary);
   margin: 0;
   padding: 8px;
@@ -60,4 +59,24 @@
   font-family: afacad;
   font-size: 14px;
   line-height: 16px;
+}
+
+.modal__tabs-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+}
+
+.filter-modal__button-container {
+  width: max-content;
+  height: 80vh;
+}
+
+.filter-modal__tab-highlight {
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--color-secondary);
 }

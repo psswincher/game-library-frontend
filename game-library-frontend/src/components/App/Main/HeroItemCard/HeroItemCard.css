@@ -4,7 +4,6 @@
   background-color: var(--color-styleWhite);
   border-radius: 8px;
   position: relative;
-  /* overflow: visible; */
 }
 
 .hero-item-card_on {
@@ -39,19 +38,19 @@
 .hero-item-card__data {
   color: var(--color-primary);
   font: var(--font-subheading-itemCards);
+  letter-spacing: 0.02em;
 }
 
 .hero-item-card__right {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   align-items: baseline;
   font: var(--font-sectionHeading);
   color: var(--color-primary);
   width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .hero-item-card__game-info {

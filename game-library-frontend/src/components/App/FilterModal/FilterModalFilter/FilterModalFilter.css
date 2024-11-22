@@ -2,11 +2,15 @@
   list-style-type: none;
   width: 100%;
 }
-
+.filter-modal__top {
+  display: flex;
+  flex-direction: row;
+  column-gap: 24px;
+}
 .filter-modal-filter__title {
   font: var(--font-subheading);
   color: var(--color-font-white);
-  width: 150px;
+  width: max-content;
   display: flex;
   flex-direction: row;
   column-gap: 4px;

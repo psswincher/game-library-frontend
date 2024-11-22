@@ -14,10 +14,12 @@ export default class Api {
     return Promise.reject(`API request Error: ${res.status}`);
   }
 
+  //
   getGames() {
     return this._handleRequest(`${this._baseUrl}games`);
   }
 
+  //
   getUserInfo = (token) => {
     return this._handleRequest(`${this._baseUrl}users/me`, {
       method: "GET",
@@ -29,6 +31,7 @@ export default class Api {
     });
   };
 
+  //
   editUser({ name, avatar, token }) {
     const user = { name, avatar };
     return this._handleRequest(`${this._baseUrl}users/me`, {
@@ -41,7 +44,7 @@ export default class Api {
       body: JSON.stringify(user),
     });
   }
-
+  //
   addUserLikedGame({ token, gameId }) {
     return this._handleRequest(`${this._baseUrl}users/me/likeGame`, {
       method: "PATCH",
@@ -53,7 +56,7 @@ export default class Api {
       body: JSON.stringify({ gameId }),
     });
   }
-
+  //
   removeUserLikedGame({ token, gameId }) {
     return this._handleRequest(`${this._baseUrl}users/me/unlikeGame`, {
       method: "PATCH",

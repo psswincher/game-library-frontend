@@ -1,21 +1,48 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Spinner from "./Spinner/Spinner";
 import "./Button.css";
-function Button({ onClick, text, isActive, variant, type }) {
+function Button({ onClick, text, isOn, style, type, size, children }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isButtonOn, setIsButtonOn] = useState(false);
 
-  const buttonVariants = ["default", "secondary", "mechanic"];
+  const buttonStyles = ["default", "secondary", "danger", "mechanic", "tab"];
+  const buttonSizes = [
+    "smallest",
+    "smaller",
+    "small",
+    "default",
+    "large",
+    "larger",
+    "largest",
+  ];
 
-  const buttonVariantClass = () => {
-    if (variant) {
-      return buttonVariants.includes(variant) ? "button_" + variant : "";
+  const buttonSizeClass = () => {
+    if (size !== undefined && size !== null) {
+      if (size !== "") {
+        return buttonSizes.includes(size)
+          ? "button__size_" + size
+          : "button__size_default";
+      } else {
+        console.log(`Invalid button size: ${size}`);
+      }
     }
-    return "";
+    return "button__size_default";
   };
 
-  const buttonActiveClass = () => {
-    return isButtonActive ? "button_on" : "";
+  const buttonStyleClass = () => {
+    if (style !== undefined && style !== null) {
+      return buttonStyles.includes(style)
+        ? "button__style_" + style
+        : "button__style_default";
+    } else {
+      console.log(`Invalid button style: ${style}`);
+    }
+    return "button__style_default";
+  };
+
+  const buttonOnClass = () => {
+    return isButtonOn ? "button_on" : "";
   };
 
   const onButtonClick = async (event) => {
@@ -32,25 +59,27 @@ function Button({ onClick, text, isActive, variant, type }) {
   };
 
   useEffect(() => {
-    setIsButtonActive(isActive);
-  }, [isActive]);
+    setIsButtonOn(isOn);
+  }, [isOn]);
 
   return (
-    <button
-      className={`button ${buttonVariantClass()} ${buttonActiveClass()}`}
+    <motion.button
+      className={`button ${buttonStyleClass()} ${buttonOnClass()} ${buttonSizeClass()}`}
       type={type ? type : "button"}
       onClick={onButtonClick}
+      initial={{ scale: 1 }}
+      whileTap={{ scale: 1.1 }}
+      transition={{ type: "spring", stiffness: 300 }}
     >
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <span
-          className={`button__text ${buttonVariantClass()} ${buttonActiveClass()}`}
-        >
-          {text}
-        </span>
-      )}
-    </button>
+      {children}
+      <div className="button__content">
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <span className={`button__text`}>{text}</span>
+        )}
+      </div>
+    </motion.button>
   );
 }
 

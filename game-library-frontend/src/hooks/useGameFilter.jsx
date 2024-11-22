@@ -9,7 +9,7 @@ const initialFilterState = () => {
     status[filter.name] = {};
     status[filter.name].options = {};
     status[filter.name].activeCount = 0;
-
+    status[filter.name].mode = true;
     status.filterCount += 1;
     filter.options.forEach((option) => {
       status[filter.name][option] = false;
@@ -35,6 +35,16 @@ const filterReducer = (state, action) => {
             [action.option]: newStatus,
           },
           activeCount: updatedCount,
+        },
+      };
+    }
+
+    case "SET_FILTER_MODE": {
+      return {
+        ...state,
+        [action.filter]: {
+          ...state[action.filter],
+          mode: action.mode,
         },
       };
     }
@@ -78,6 +88,10 @@ export const GameFilterContextProvider = ({ children, gameLibrary }) => {
 
   const getActiveFilterOptions = (gameFilter) => {
     return gameFilter.options.filter((option) => filterState[option]);
+  };
+
+  const setFilterMode = (filter, mode) => {
+    dispatch({ type: "SET_FILTER_MODE", filter, mode });
   };
 
   const getAllActiveFilterOptions = () => {
@@ -161,17 +175,42 @@ export const GameFilterContextProvider = ({ children, gameLibrary }) => {
     if (isAnyFilterActive()) {
       return gameLibrary.filter((game) => {
         return filters.every((filter) => {
-          if (filterState[filter.name].activeCount === 0) return true;
+          if (isFilterActive(filter.name) === 0) return true;
           const filterOptions = filterState[filter.name].options;
+          const mode = filterState[filter.name].mode;
 
-          const filterPasses = Object.keys(filterOptions).some((option) => {
-            return filterOptions[option] && game.attributes.includes(option);
-          });
-          return filterPasses;
+          if (mode) {
+            //mode === true means return all games that have any one of these present
+            return areAnyOptionsInGameAttribute(filterOptions, game);
+          } else {
+            //mode === false means return all games that have all filters present
+            return areAllOptionsInGameAttribute(filterOptions, game);
+          }
         });
       });
     }
     return gameLibrary;
+  };
+
+  const areAnyOptionsInGameAttribute = (filterOptions, game) => {
+    const filterPasses = Object.keys(filterOptions).some((option) => {
+      return filterOptions[option] && game.attributes?.[option] === true;
+    });
+    return filterPasses;
+  };
+
+  const areAllOptionsInGameAttribute = (filterOptions, game) => {
+    const filterPasses = Object.keys(filterOptions).every((option) => {
+      if (filterOptions[option] === true) {
+        return (
+          filterOptions[option] === true && game.attributes?.[option] === true
+        );
+      } else {
+        return true;
+      }
+    });
+
+    return filterPasses;
   };
 
   return (
@@ -188,6 +227,8 @@ export const GameFilterContextProvider = ({ children, gameLibrary }) => {
         getFilterTitle,
         filterCount,
         getActiveFilterCount,
+        setFilterMode,
+        filterGames,
       }}
     >
       {children}

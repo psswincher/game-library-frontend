@@ -23,33 +23,6 @@ export const useUserManager = (api) => {
     return request;
   };
 
-  const handlePlayedGame = ({ gameId }) => {
-    const request = () => {
-      return api
-        .addUserPlayedGame({
-          gameId: gameId,
-          token: getToken(),
-        })
-        .then((res) => {
-          setUserPlayedGames(res.user.playedGames);
-        });
-    };
-    return request;
-  };
-  const handleUnplayedGame = ({ gameId }) => {
-    const request = () => {
-      return api
-        .removeUserPlayedGame({
-          gameId: gameId,
-          token: getToken(),
-        })
-        .then((res) => {
-          setUserPlayedGames(res.user.playedGames);
-        });
-    };
-    return request;
-  };
-
   const handleLikeGame = ({ gameId }) => {
     const request = () => {
       return api
@@ -79,31 +52,19 @@ export const useUserManager = (api) => {
     return request;
   };
 
-  const handleWantGame = ({ gameId }) => {
-    const request = () => {
-      return api
-        .addUserWantGame({
-          gameId: gameId,
-          token: getToken(),
-        })
-        .then((res) => {
-          setUserWantedGames(res.user.wantedGames);
-        });
-    };
-    return request;
+  const updateUserLikedGames = (res) => {
+    setUserLikedGames(res.user.likedGames);
+    return userLikedGames;
   };
-  const handleUnwantGame = ({ gameId }) => {
-    const request = () => {
-      return api
-        .removeUserWantGame({
-          gameId: gameId,
-          token: getToken(),
-        })
-        .then((res) => {
-          setUserWantedGames(res.user.wantedGames);
-        });
-    };
-    return request;
+
+  const updateUserPlayedGames = (res) => {
+    setUserPlayedGames(res.user.playedGames);
+    return userPlayedGames;
+  };
+
+  const updateUserWantedGames = (res) => {
+    setUserWantedGames(res.user.wantedGames);
+    return userWantedGames;
   };
 
   const handleSignUp = ({ name, email, avatar, password }) => {
@@ -145,6 +106,10 @@ export const useUserManager = (api) => {
     return userPlayedGames.includes(game._id);
   };
 
+  const userNotPlayedGame = (game) => {
+    return !userPlayedGames.includes(game._id);
+  };
+
   useEffect(() => {
     const jwt = getToken();
     if (!jwt) return;
@@ -168,16 +133,18 @@ export const useUserManager = (api) => {
   }, []);
 
   return {
-    handleWantGame,
-    handleUnwantGame,
+    updateUserWantedGames,
     userWantedGames,
     setUserWantedGames,
     userWantsGame,
-    handlePlayedGame,
-    handleUnplayedGame,
+    updateUserPlayedGames,
+    updateUserLikedGames,
     userPlayedGame,
+    userNotPlayedGame,
     userPlayedGames,
+
     userLikesGame,
+
     handleSignUp,
     handleLogin,
     handleLikeGame,

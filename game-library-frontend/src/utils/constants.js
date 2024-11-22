@@ -79,6 +79,8 @@ export const filters = [
     gameKey: "playerCount",
     heroImg: playersImage,
     heroSubtitle: "How many players are you gaming with?",
+    buttonStyle: "default",
+    showModeToggle: false,
   },
   {
     name: "Category",
@@ -88,6 +90,8 @@ export const filters = [
     heroImg: complexityImage,
     heroSubtitle: "What kind of game?",
     heroFilter: true,
+    buttonStyle: "default",
+    showModeToggle: false,
   },
 
   {
@@ -104,6 +108,8 @@ export const filters = [
     heroImg: complexityImage,
     heroSubtitle: "How complex of a game are you feeling?",
     heroFilter: true,
+    buttonStyle: "default",
+    showModeToggle: false,
   },
   {
     name: "Game Length",
@@ -113,6 +119,8 @@ export const filters = [
     heroImg: gameLengthImage,
     heroSubtitle: "How long do you want to spend playing a game?",
     heroFilter: true,
+    buttonStyle: "default",
+    showModeToggle: false,
   },
   {
     name: "Mechanics",
@@ -173,8 +181,20 @@ export const filters = [
       "Drawing",
       "Conversation Starter",
     ],
-    buttonVariant: "mechanic",
+    buttonStyle: "mechanic",
     heroFilter: false,
+    showModeToggle: true,
+  },
+  {
+    name: "User Preferences",
+    title: "Preferences",
+    options: ["Wants to Play", "Has Played", "Has Not Played", "Likes"],
+    gameKey: "preferences",
+    heroImg: gameLengthImage,
+    heroSubtitle: "Log in to save your preferences!",
+    heroFilter: true,
+    buttonStyle: "default",
+    showModeToggle: true,
   },
 ];
 

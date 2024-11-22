@@ -32,7 +32,6 @@ function IconButton({ onClick, isActive, alt, variant, type, icon, children }) {
   };
 
   useEffect(() => {
-    console.log("Checking if icon is active", isActive);
     setIsButtonActive(isActive);
   }, [isActive]);
 

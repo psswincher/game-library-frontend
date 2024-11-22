@@ -1,22 +1,77 @@
 :root {
-  --color-background: #271030;
-  --color-primary: #521f63;
-  --color-primary-semiTransparent: rgba(82, 31, 99, 0.7);
-  --color-styleWhite: #f2f2ed;
-  --color-secondary: #4abab7;
-  --color-accent: #fcdb3d;
-  --color-clearWhite: white;
-  --color-font-dark: black;
-  --color-font-white: white;
+  --color-purple-darkest: rgb(31, 13, 38);
+  --color-purple-dark: rgb(39, 16, 48);
+  --color-purple-default: rgb(82, 31, 99);
+  --color-purple-light: rgb(171, 81, 201);
+  --color-purple-desaturated: rgb(68, 58, 72);
 
-  --font-heading: 600 2rem "Afacad", "Arial", sans-serif;
-  --font-heading-itemCards: 600 1.8rem/1.7 "Afacad", "Arial", sans-serif;
-  --font-subheading: 500 1.4rem/1.2 "Afacad", "Arial", sans-serif;
-  --font-subheading-itemCards: 500 0.95rem "Afacad", "Arial", sans-serif;
+  --color-blue-darkest: rgb(40, 106, 104);
+  --color-blue-dark: rgb(57, 151, 148);
+  --color-blue-default: rgb(74, 186, 183);
+  --color-blue-light: rgb(146, 214, 212);
+  --color-blue-desaturated: rgb(95, 113, 113);
+
+  --color-white-darkest: rgb(162, 162, 126);
+  --color-white-dark: rgb(202, 202, 181);
+  --color-white-default: rgb(242, 242, 237);
+  --color-white-light: rgb(245, 245, 241);
+  --color-white-desaturated: rgb(242, 242, 237);
+
+  --color-yellow-darkest: rgb(185, 153, 3);
+  --color-yelow-dark: rgb(247, 205, 4);
+  --color-yellow-default: rgb(252, 219, 61);
+  --color-yellow-light: rgb(253, 233, 139);
+  --color-yellow-desaturated: rgb(176, 169, 137);
+
+  --color-purple-dark-semiTransparent: rgba(39, 16, 48, 0.7);
+  --color-purple-default-semiTransparent: rgba(82, 31, 99, 0.7);
+  --color-purple-light-semiTransparent: rgba(171, 81, 201, 0.7);
+
+  --color-blue-dark-semiTransparent: rgba(57, 151, 148, 0.7);
+  --color-blue-default-semiTransparent: rgba(57, 151, 148, 0.7);
+  --color-blue-light-semiTransparent: rgba(146, 214, 212, 0.7);
+
+  --color-white-dark-semiTransparent: rgba(202, 202, 181, 0.7);
+  --color-white-default-semiTransparent: rgba(242, 242, 237, 0.7);
+  --color-white-light-semiTransparent: rgba(245, 245, 241, 0.7);
+
+  --color-yelow-dark-semiTransparent: rgba(247, 205, 4, 0.7);
+  --color-yellow-default-semiTransparent: rgba(252, 219, 61, 0.7);
+  --color-yellow-light-semiTransparent: rgba(253, 233, 139, 0.7);
+
+  --color-background: var(--color-purple-dark);
+  --color-primary: var(--color-purple-default);
+  --color-primary-semiTransparent: rgba(82, 31, 99, 0.7);
+  --color-styleWhite: var(--color-white-default);
+  --color-secondary: var(--color-blue-default);
+  --color-accent: var(--color-yellow-default);
+  --color-clearWhite: white;
+  --color-font-dark: var(--color-purple-darkest);
+  --color-font-white: var(--color-white-light);
+
+  --font-size-largest: 2.4rem;
+  --font-size-larger: 1.8rem;
+  --font-size-large: 1.4rem;
+  --font-size-default: 1.2rem;
+  --font-size-small: 1rem;
+  --font-size-smaller: 0.85rem;
+  --font-size-smallest: 0.7rem;
+
+  --font-heading-largest: 600 var(--font-size-largest) "Afacad", "Arial",
+    sans-serif;
+  --font-heading-larger: 600 var(--font-size-larger) "Afacad", "Arial",
+    sans-serif;
+  --font-heading-large: 600 var(--font-size-large) "Afacad", "Arial", sans-serif;
+  --font-heading: var(--font-heading-largest);
+  --font-heading-itemCards: 600 var(--font-size-larger) "Afacad", "Arial",
+    sans-serif;
+  --font-subheading: 500 var(--font-size-large) "Afacad", "Arial", sans-serif;
+  --font-subheading-itemCards: 600 var(--font-size-smaller) "Afacad", "Arial",
+    sans-serif;
   --font-sectionHeading: 400 1rem/1.6 "Afacad", "Arial", sans-serif;
   --font-darkParagraph: 400 1.2rem/1 "Afacad", "Arial", sans-serif;
   --font-smallButton: 400 1rem/0.8 "Afacad", "Arial", sans-serif;
-  --font-smallText: 400 0.8rem/0.6 "Afacad", "Arial", sans-serif;
+  --font-smallText: 400 var(--font-size-largest) "Afacad", "Arial", sans-serif;
   --font-smallText-mechanic: 400 0.7rem "Afacad", "Arial", "sans-serif";
 
   --button-hover-transform: translateY(-4px);
@@ -25,6 +80,42 @@
 
   --border-icon-button: 2px outset black;
   --border-standard-button: 1px double black;
+
+  --button-height-largest: 2.75rem;
+  --button-height-larger: 2.5rem;
+  --button-height-large: 2.25rem;
+  --button-height-default: 2rem;
+  --button-height-small: 1.75rem;
+  --button-height-smaller: 1.5rem;
+  --button-height-smallest: 1.25rem;
+
+  --button-background-adjust-hover: brightness(90%);
+  --button-background-adjust-active: brightness(70%);
+  --button-background-adjust-disabled: grayscale(50%);
+
+  --button-border-smallest: 0.25px solid var(--color-purple-darkest);
+
+  --button-style-primary-background: var(--color-blue-default);
+  --button-style-primary-background-hover: var(--color-blue-dark);
+  --button-style-primary-background-active: var(--color-blue-darkest);
+  --button-style-primary-background-on: var(--color-yellow-default);
+  --button-style-primary-background-disabled: var(--color-blue-desaturated);
+  --button-style-primary-font-color: var(--color-font-dark);
+  --button-style-primary-font-color-disabled: var(--color-white-dark);
+
+  --button-style-secondary-background: var(--color-white-default);
+  --button-style-secondary-background-hover: var(--color-white-dark);
+  --button-style-secondary-background-active: var(--color-yellow-light);
+  --button-style-secondary-background-disabled: var(--color-white-light);
+  --button-style-secondary-font-color: var(--color-font-dark);
+  --button-style-secondary-font-color-disabled: var(--color-white-dark);
+
+  --button-style-mechanic-background: var(--color-white-default);
+  --button-style-mechanic-background-hover: var(--color-white-dark);
+  --button-style-mechanic-background-active: var(--color-yellow-light);
+  --button-style-mechanic-background-disabled: var(--color-white-light);
+  --button-style-mechanic-font-color: var(--color-font-dark);
+  --button-style-mechanic-font-color-disabled: var(--color-white-dark);
 }
 
 .page {

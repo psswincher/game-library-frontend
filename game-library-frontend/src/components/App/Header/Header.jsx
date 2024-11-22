@@ -6,7 +6,7 @@ import buttonHamburger from "../../../assets/button-hamburger.svg";
 import { useGameFilters } from "../../../hooks/useGameFilter";
 import { motion, useAnimation } from "framer-motion";
 import UserInfo from "../UserInfo/UserInfo.jsx";
-
+import FilterBar from "../FilterBar/FilterBar.jsx";
 function Header({
   onProfileClick,
   currentUser,
@@ -14,6 +14,8 @@ function Header({
   onFilterModalClick,
   onSignUpClick,
   onLoginClick,
+  onFilterClick,
+  activeFilter,
 }) {
   const { getActiveFilterCount } = useGameFilters();
   const controls = useAnimation();
@@ -51,7 +53,7 @@ function Header({
         top: 0,
         left: 0,
         width: "100%",
-        zIndex: 1,
+        zIndex: 2,
         padding: "20px",
         color: "white",
         backdropFilter: "blur(3px)", // Optional: Adds a slight blur effect
@@ -62,6 +64,12 @@ function Header({
         <div className="header__left">
           {/* <img className="header__logo" src={logo} /> */}
           <div className="header__title">Home</div>
+        </div>
+        <div className="header__center">
+          <FilterBar
+            onFilterClick={onFilterClick}
+            activeFilter={activeFilter}
+          />
         </div>
         <div className="header__right">
           {!isLoggedIn && (

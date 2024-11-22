@@ -121,7 +121,8 @@
   padding: 1px;
   border-radius: 50%;
   background-color: var(--color-accent);
-  font: var(--font-smallText);
+  font: var(--font-subheading);
+  font-size: var(--font-size-small);
   line-height: 20px;
   text-align: center;
   visibility: hidden;

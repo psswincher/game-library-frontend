@@ -71,6 +71,7 @@
   flex-direction: row;
   width: 90%;
   justify-content: space-between;
+  letter-spacing: 0.02em;
 }
 
 .text-item-card__data {
