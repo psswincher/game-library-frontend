@@ -59,24 +59,24 @@ function FilterBar({ onFilterClick, activeFilter }) {
                 height: isOpen ? `${height}` : "25px",
                 transition: {
                   left: {
-                    duration: 0.35,
+                    duration: 0.15,
                     ease: "easeInOut",
                     delay: isOpen ? 0 : 0.25,
                   },
                   top: {
-                    duration: 0.35,
+                    duration: 0.15,
                     ease: "easeInOut",
                     delay: isOpen ? 0 : 0.25,
                   },
                   width: {
                     duration: 0.25,
                     ease: "easeInOut",
-                    delay: isOpen ? 0.4 : 0,
+                    delay: isOpen ? 0.25 : 0,
                   },
                   height: {
                     duration: 0.25,
                     ease: "easeInOut",
-                    delay: isOpen ? 0.4 : 0,
+                    delay: isOpen ? 0.25 : 0,
                   },
                 },
               }}

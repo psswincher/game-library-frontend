@@ -50,20 +50,7 @@ const filterReducer = (state, action) => {
     }
 
     case "RESET_FILTERS": {
-      const resetState = {};
-      Object.keys(state).forEach((filterName) => {
-        resetState[filterName] = {
-          options: Object.keys(state[filterName].options).reduce(
-            (acc, option) => {
-              acc[option] = false;
-              return acc;
-            },
-            {}
-          ),
-          activeCount: 0,
-        };
-      });
-      return resetState;
+      return initialFilterState();
     }
 
     default:

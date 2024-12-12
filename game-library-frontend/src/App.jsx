@@ -10,7 +10,10 @@ import { apiInfo } from "./utils/constants.js";
 import { AppContext } from "./contexts/AppContext.jsx";
 import { GameLibraryContext } from "./contexts/GameLibraryContext.jsx";
 import { CurrentUserContext } from "./contexts/CurrentUserContext.jsx";
-import { GameFilterContextProvider } from "./hooks/useGameFilter.jsx";
+import {
+  GameFilterContextProvider,
+  useGameFilters,
+} from "./hooks/useGameFilter.jsx";
 import { IsLoggedInContext } from "./contexts/IsLoggedInContext.jsx";
 import RegisterModal from "./components/App/RegisterModal/RegisterModal.jsx";
 import LoginModal from "./components/App/LoginModal/LoginModal.jsx";
@@ -18,24 +21,24 @@ import { useGameLibrary } from "./hooks/useGameLibrary.jsx";
 import useApi from "./hooks/useApi.jsx";
 import { useUserManager } from "./hooks/useUserManager.jsx";
 import { useModal } from "./hooks/useModal.jsx";
-import { getToken, setToken } from "./utils/token.js";
+import { getToken } from "./utils/token.js";
+import ItemModal from "./components/App/ItemModal/ItemModal.jsx";
 
 import ProfileModal from "./components/App/ProfileModal/ProfileModal.jsx";
 const api = new Api(apiInfo.baseUrl);
 
 function App() {
-  const [userProfileVisible, setUserProfileVisible] = useState(false);
   const [searchedGameLibrary, setSearchedGameLibrary] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
-
+  const [currentItem, setCurrentItem] = useState({});
   const {
     gameLibrary,
-    setGameLibrary,
     initializeLibrary,
     updateLibraryGameWanted,
     updateLibraryGamePlayed,
     updateLibraryGameLiked,
+    libraryUserPrefsDecorator,
   } = useGameLibrary();
 
   const {
@@ -46,16 +49,17 @@ function App() {
     addUserPlayedGame,
     addUserLikedGame,
     removeUserLikedGame,
+    signIn,
   } = useApi(apiInfo.baseUrl);
 
   const {
     handleSignUp,
     userLikesGame,
-    handleLogin,
     userPlayedGame,
     userPlayedGames,
-    isLoggedIn,
     currentUser,
+    isLoggedIn,
+    setCurrentUser,
     handleLogout,
     userLikedGames,
     userWantsGame,
@@ -63,6 +67,7 @@ function App() {
     updateUserWantedGames,
     updateUserLikedGames,
     updateUserPlayedGames,
+    handleUserLogin,
   } = useUserManager(api);
 
   const { isOpen, setActiveModal, closeActiveModal } = useModal();
@@ -83,7 +88,11 @@ function App() {
 
   const onLogin = ({ email, password }) => {
     const user = { email, password };
-    return handleRequest(handleLogin(user));
+    return handleRequests(signIn(user), [
+      handleUserLogin,
+      libraryUserPrefsDecorator,
+      closeActiveModal,
+    ]);
   };
 
   const onSignUpClick = () => {
@@ -92,6 +101,10 @@ function App() {
 
   const onLoginClick = () => {
     setActiveModal("login-modal");
+  };
+
+  const onProfileClick = () => {
+    setActiveModal("profile-modal");
   };
 
   const handleRequest = (request, callbacks = []) => {
@@ -114,7 +127,6 @@ function App() {
           otherHandlers.forEach((fn) => fn());
         }
       })
-      .then(closeActiveModal)
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }
@@ -150,8 +162,7 @@ function App() {
       );
     }
   };
-  //BOOM! We have decoupled user management, game library management, and API call
-  //while staying dry by wrapping them in a shared function that handles errors etc
+
   const onWantsGameClick = (game) => {
     if (userWantsGame(game)) {
       return handleRequests(
@@ -169,12 +180,8 @@ function App() {
   };
 
   const onItemClick = (item) => {
-    if (item.isClicked) {
-      item.isClicked = !item.isClicked;
-    } else {
-      item.isClicked = true;
-    }
-    console.log("Item isClicked is now", item.isClicked);
+    setCurrentItem(item);
+    setActiveModal("item-modal");
   };
 
   const onFilterModalClick = () => {
@@ -193,6 +200,7 @@ function App() {
         <CurrentUserContext.Provider
           value={{
             currentUser,
+            setCurrentUser,
             onLikeGameClick,
             userLikesGame,
             userLikedGames,
@@ -208,12 +216,11 @@ function App() {
             <IsLoggedInContext.Provider value={{ isLoggedIn }}>
               <div className="page">
                 <Header
-                  currentUser={currentUser}
                   onFilterModalClick={onFilterModalClick}
-                  isLoggedIn={isLoggedIn}
                   onSignUpClick={onSignUpClick}
                   onLoginClick={onLoginClick}
                   onFilterClick={onFilterClick}
+                  onProfileClick={onProfileClick}
                   activeFilter={activeFilter}
                 />
                 <div className="page__content">
@@ -222,10 +229,10 @@ function App() {
                     onFilterModalClick={onFilterModalClick}
                   />
                   <Footer />
+                  <ItemModal isOpen={isOpen("item-modal")} item={currentItem} />
                   <FilterModal
                     isOpen={isOpen("filter-modal")}
                     onFilterClick={onFilterClick}
-                    // onFilterSearchBarType={onFilterSearchBarType}
                   />
                   <ProfileModal
                     isOpen={isOpen("profile-modal")}
@@ -235,100 +242,6 @@ function App() {
                     isOpen={isOpen("login-modal")}
                     onLogin={onLogin}
                   />
-                  {/* <ModalWithForm
-                title="New Garment"
-                buttonText="Add garment"
-                activeModal={activeModal}
-                closeModal={closeActiveModal}
-              >
-                <label
-                  htmlFor="garment-name"
-                  className={styleAddGarmentModal["modal__label"]}
-                >
-                  Name
-                  <input
-                    name="garment-name"
-                    id="garment-name"
-                    className={styleAddGarmentModal["modal__input"]}
-                    type="text"
-                    placeholder="Name"
-                    required
-                  />
-                  <span
-                    className="modal__input_type_error garment-name-error"
-                    id="garment-name-input-error"
-                  ></span>
-                </label>
-                <label
-                  htmlFor="garment-imageUrl"
-                  className={styleAddGarmentModal["modal__label"]}
-                >
-                  Image
-                  <input
-                    name="garment-imageUrl"
-                    id="garment-imageUrl"
-                    className={styleAddGarmentModal["modal__input"]}
-                    type="text"
-                    placeholder="Image URL"
-                    required
-                  />
-                  <span
-                    className="modal__input_type_error garment-name-input-error"
-                    id="garment-name-input-error"
-                  ></span>
-                </label>
-                <fieldset
-                  className={styleAddGarmentModal["modal__radio-buttons"]}
-                >
-                  <legend className={styleAddGarmentModal["modal__legend"]}>
-                    <label
-                      htmlFor="hot"
-                      className={
-                        styleAddGarmentModal[
-                          "modal__label modal__label_type_radio"
-                        ]
-                      }
-                    >
-                      <input
-                        id="hot"
-                        type="radio"
-                        className={styleAddGarmentModal["modal__radio-input"]}
-                      />
-                      <span>Hot</span>
-                    </label>
-                    <label
-                      htmlFor="warm"
-                      className={
-                        styleAddGarmentModal[
-                          "modal__label modal__label_type_radio"
-                        ]
-                      }
-                    >
-                      <input
-                        id="warm"
-                        type="radio"
-                        className={styleAddGarmentModal["modal__radio-input"]}
-                      />
-                      <span>Warm</span>
-                    </label>
-                    <label
-                      htmlFor="cold"
-                      className={
-                        styleAddGarmentModal[
-                          "modal__label modal__label_type_radio"
-                        ]
-                      }
-                    >
-                      <input
-                        id="cold"
-                        type="radio"
-                        className={styleAddGarmentModal["modal__radio-input"]}
-                      />
-                      <span>Cold</span>
-                    </label>
-                  </legend>
-                </fieldset>
-              </ModalWithForm> */}
                   <RegisterModal
                     isOpen={isOpen("register-modal")}
                     onSignUp={onSignUp}

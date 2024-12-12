@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import "./ImageItemCard.css";
-import GameImage from "../../GameImage/GameImage";
-function ImageItemCard({ item, onItemClick, onItemCardClick }) {
+import ImageTitleBlock from "./ImageTitleBlock/ImageTitleBlock";
+import Button from "../../Buttons/Button";
+import { GameFilterContext } from "../../../../contexts/GameFilterContext";
+
+function ImageItemCard({ item, onItemClick }) {
+  const { onFilterOptionClick, isOptionActive } = useContext(GameFilterContext);
+
   function handleItemClick() {
     onItemClick(item);
-    onItemCardClick(item);
   }
 
   const itemPlayers = () => {
@@ -11,16 +16,33 @@ function ImageItemCard({ item, onItemClick, onItemCardClick }) {
   };
 
   return (
-    <li className="image-item-card" onClick={handleItemClick}>
-      <div className="image-item-card__content">
-        <div className="image-item-card__top">
-          <GameImage game={item} />
-          <h2 className="image-item-card__title">{item.name}</h2>
-        </div>
+    <li
+      className={`image-item-card  ${
+        item.isFavorite && "image-item-card__highlight"
+      }`}
+      onClick={handleItemClick}
+    >
+      <div className={`image-item-card__content`}>
+        <ImageTitleBlock game={item} />
         <div className="image-item-card__game-base-data">
-          <div className="image-item-card__data">{item.category}</div>
-          <div className="image-item-card__data">{item.complexity}</div>
-          <div className="image-item-card__data">{item.gameLength}</div>
+          <Button
+            text={item.category}
+            isOn={isOptionActive("Category", item.category)}
+            onClick={() => onFilterOptionClick("Category", item.category)}
+            style="attribute"
+          />
+          <Button
+            text={item.complexity}
+            isOn={isOptionActive("Complexity", item.complexity)}
+            onClick={() => onFilterOptionClick("Complexity", item.complexity)}
+            style="attribute"
+          />
+          <Button
+            text={item.gameLength}
+            isOn={isOptionActive("Game Length", item.gameLength)}
+            onClick={() => onFilterOptionClick("Game Length", item.gameLength)}
+            style="attribute"
+          />
           <div className="image-item-card__data">{itemPlayers()}</div>
         </div>
         <div className="image-item-card__game-short-description">

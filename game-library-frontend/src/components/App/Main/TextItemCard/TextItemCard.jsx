@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { motion } from "framer-motion";
 import "./TextItemCard.css";
-function TextItemCard({ item, onItemClick, onItemCardClick }) {
-  const [clicked, setClicked] = useState(false);
+import Button from "../../Buttons/Button";
+import { GameFilterContext } from "../../../../contexts/GameFilterContext";
+function TextItemCard({ item, onItemClick }) {
   function handleItemClick() {
-    onItemCardClick(item);
     onItemClick(item);
-    setClicked(!clicked);
-    console.log(clicked);
   }
+  const { onFilterOptionClick, isOptionActive } = useContext(GameFilterContext);
   const itemPlayers = () => {
     return item.playerCountSlug.replace(" Players", "P");
   };
@@ -19,9 +18,27 @@ function TextItemCard({ item, onItemClick, onItemCardClick }) {
         <h2 className="text-item-card__title">{item.name}</h2>
         <div className="text-item-card__top">
           <div className="text-item-card__game-base-data">
-            <div className="text-item-card__data">{item.category}</div>
-            <div className="text-item-card__data">{item.complexity}</div>
-            <div className="text-item-card__data">{item.gameLength}</div>
+            <Button
+              text={item.category}
+              isOn={isOptionActive("Category", item.category)}
+              onClick={() => onFilterOptionClick("Category", item.category)}
+              style="attribute"
+            />
+            <Button
+              text={item.complexity}
+              isOn={isOptionActive("Complexity", item.complexity)}
+              onClick={() => onFilterOptionClick("Complexity", item.complexity)}
+              style="attribute"
+            />
+            <Button
+              text={item.gameLength}
+              isOn={isOptionActive("Game Length", item.gameLength)}
+              onClick={() =>
+                onFilterOptionClick("Game Length", item.gameLength)
+              }
+              style="attribute"
+            />
+
             <div className="text-item-card__data">{itemPlayers()}</div>
           </div>
         </div>

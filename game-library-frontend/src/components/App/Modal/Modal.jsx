@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import closeModalIcon from "../../../assets/close-modal-icon.svg";
 import "./Modal.css";
@@ -6,6 +6,7 @@ import { AppContext } from "../../../contexts/AppContext";
 
 function Modal({ children, isOpen }) {
   const { closeActiveModal } = useContext(AppContext);
+  const modalWrapperRef = useRef(null);
 
   useEffect(() => {
     const handleEscClose = (e) => {
@@ -22,7 +23,11 @@ function Modal({ children, isOpen }) {
   }, [closeActiveModal]);
 
   const handleOverlay = (e) => {
-    if (e.target === e.currentTarget) {
+    if (
+      modalWrapperRef.current &&
+      !modalWrapperRef.current.contains(e.target)
+    ) {
+      console.log("Close modal clicked.");
       closeActiveModal();
     }
   };
@@ -39,6 +44,7 @@ function Modal({ children, isOpen }) {
           transition={{ duration: 0.3 }}
         >
           <motion.div
+            ref={modalWrapperRef}
             className="modal__wrapper"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -49,7 +55,7 @@ function Modal({ children, isOpen }) {
               type="button"
               className={`modal__close-button`}
               onClick={closeActiveModal}
-              style={{ right: "10%", top: "8%" }}
+              style={{ right: "2%", top: "2%" }}
             >
               <img
                 className={"modal__close-icon"}

@@ -20,7 +20,9 @@ export function useGameLibrary() {
     const gameData = rawGameData.data;
     const hash = {};
     gameData.forEach((game, index) => {
+      setGameCardInfo(game);
       game.attributes = {};
+
       hash[game._id] = index;
       filters.forEach((filter) => {
         if (Array.isArray(game[filter.gameKey])) {
@@ -35,14 +37,56 @@ export function useGameLibrary() {
 
     setGameLibrary(gameData);
     setLibraryHash(hash);
-    console.log(libraryHash);
     return gameData;
   };
 
-  //TO DO;
+  const setGameCardInfo = (game) => {
+    game.cardType = "TextItemCard";
+    if (game.isStrongArt === true || game.isFavorite === true)
+      game.cardType = "ImageItemCard";
+    if (game.isFeatured === true) game.cardType = "HeroItemCard";
+    setGameGridRowSpan(game);
+    setGameGridColumnSpan(game);
+  };
+
+  const setGameGridRowSpan = (game) => {
+    game.gridRowSpan =
+      game.cardType === "HeroItemCard" || game.cardType === "ImageItemCard"
+        ? "span 2"
+        : "span 1";
+  };
+
+  const setGameGridColumnSpan = (game) => {
+    game.gridColumnSpan =
+      game.cardType === "HeroItemCard" ? "span 3" : "span 1";
+  };
+
   const libraryUserPrefsDecorator = (user) => {
-    console.log("User prefs decorator called");
-    console.log(user);
+    console.log("Decorating library with user prefs", user);
+    const updatedLibrary = [...gameLibrary];
+    if (user.likedGames) {
+      user.likedGames.forEach((gameId) => {
+        setGamePreference(updatedLibrary, gameId, "Likes", true);
+      });
+    }
+
+    if (user.playedGames) {
+      user.playedGames.forEach((gameId) => {
+        setGamePreference(updatedLibrary, gameId, "Has Played", true);
+      });
+    }
+
+    if (user.likedGames) {
+      user.wantedGames.forEach((gameId) => {
+        setGamePreference(updatedLibrary, gameId, "Interested", true);
+      });
+    }
+
+    setGameLibrary(updatedLibrary);
+  };
+
+  const setGamePreference = (updatedLibrary, gameId, preference, state) => {
+    updatedLibrary[libraryHash[gameId]].attributes[preference] = state;
   };
 
   const getGame = (gameId) => {
@@ -55,31 +99,36 @@ export function useGameLibrary() {
 
   const updateLibraryGamePlayed = (game) => {
     const updatedLibrary = [...gameLibrary];
-    updatedLibrary[libraryHash[game._id]].attributes["Has Played"] = true;
+    updatedLibrary[libraryHash[game._id]].attributes["Has Played"] =
+      gameLibrary[libraryHash[game._id].attributes?.["Has Played"]] === true
+        ? false
+        : true;
 
     setGameLibrary(updatedLibrary);
   };
 
   const updateLibraryGameLiked = (game) => {
     const updatedLibrary = [...gameLibrary];
-    updatedLibrary[libraryHash[game._id]].attributes["Likes"] = true;
+    updatedLibrary[libraryHash[game._id]].attributes["Likes"] =
+      gameLibrary[libraryHash[game._id].attributes?.["Likes"]] === true
+        ? false
+        : true;
 
     setGameLibrary(updatedLibrary);
   };
 
   const updateLibraryGameWanted = (game) => {
     const updatedLibrary = [...gameLibrary];
-    updatedLibrary[libraryHash[game._id]].attributes["Wants to Play"] = true;
+    updatedLibrary[libraryHash[game._id]].attributes["Interested"] =
+      updatedLibrary[libraryHash[game._id]].attributes?.["Interested"] === true
+        ? false
+        : true;
 
     setGameLibrary(updatedLibrary);
   };
   const removeUserWantRequest = (game) => {
     const updatedLibrary = [...gameLibrary];
-    console.log("removewantreq:", game);
-    console.log(libraryHash);
-    console.log(libraryHash[game._id]);
-    console.log(updatedLibrary[libraryHash[game._id]]);
-    updatedLibrary[libraryHash[game._id]].attributes["Wants to Play"] = false;
+    updatedLibrary[libraryHash[game._id]].attributes["Interested"] = false;
 
     setGameLibrary(updatedLibrary);
   };

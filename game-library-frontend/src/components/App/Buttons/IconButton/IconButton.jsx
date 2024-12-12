@@ -19,6 +19,7 @@ function IconButton({ onClick, isActive, alt, variant, type, icon, children }) {
   };
 
   const onButtonClick = async (event) => {
+    event.preventDefault();
     event.stopPropagation();
     try {
       const result = onClick(event);

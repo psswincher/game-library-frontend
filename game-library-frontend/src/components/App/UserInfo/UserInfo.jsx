@@ -1,35 +1,19 @@
-import React from "react";
 import "./UserInfo.css";
-import { CurrentUserContext } from "../../../contexts/CurrentUserContext";
-import { AppContext } from "../../../contexts/AppContext";
 
-function UserInfo() {
-  const { currentUser } = React.useContext(CurrentUserContext);
-  const { setActiveModal } = React.useContext(AppContext);
-
-  const onUserInfoClick = () => {
-    setActiveModal("profile-modal");
-  };
-
+function UserInfo({ name, avatar, onClick }) {
   return (
-    <button
-      type="button"
-      className="user-info__container"
-      onClick={onUserInfoClick}
-    >
-      <p className="user-info__user-name">{currentUser.name} </p>
-      {currentUser.avatar ? (
+    <div to="/profile" className="user-info__container" onClick={onClick}>
+      <p className="user-info__user-name">{name} </p>
+      {avatar ? (
         <img
           className={`user-info__user-image`}
-          src={currentUser.avatar}
+          src={avatar}
           alt="User Profile Image"
         />
       ) : (
-        <span className={`user-info__image-placeholder`}>
-          {currentUser.name && currentUser.name[0]}
-        </span>
+        <span className={`user-info__image-placeholder`}>{name}</span>
       )}
-    </button>
+    </div>
   );
 }
 

@@ -18,6 +18,10 @@
   padding: 8px;
   border-radius: 8px;
   background-color: rgb(0 0 0 / 35%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modal__title {
@@ -61,11 +65,18 @@
   line-height: 16px;
 }
 
-.modal__tabs-container {
+.filter-modal__tabs-container {
   width: 100%;
   display: flex;
   flex-direction: row;
   column-gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-modal__filter-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 36px;
 }
 
 .filter-modal__button-container {
@@ -79,4 +90,10 @@
   width: 100%;
   border-radius: 8px;
   background-color: var(--color-secondary);
+}
+
+@media screen and (max-width: 500px) {
+  .filter-modal__filter-list {
+    row-gap: 18px;
+  }
 }

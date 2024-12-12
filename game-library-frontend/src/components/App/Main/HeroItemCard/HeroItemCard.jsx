@@ -5,37 +5,58 @@ import InteractionBar from "../../InteractionBar/InteractionBar";
 import { IsLoggedInContext } from "../../../../contexts/IsLoggedInContext";
 import { GameFilterContext } from "../../../../contexts/GameFilterContext";
 import Button from "../../Buttons/Button";
-function HeroItemCard({ item, onItemClick, onItemCardClick, isFavorite }) {
+function HeroItemCard({ item, onItemClick }) {
   function handleItemClick() {
-    onItemCardClick(item);
     onItemClick(item);
   }
 
   const { isLoggedIn } = useContext(IsLoggedInContext);
   const { onFilterOptionClick, isOptionActive } = useContext(GameFilterContext);
 
+  const itemPlayers = () => {
+    return item.playerCountSlug.replace(" Players", "P");
+  };
+
   return (
-    <li
-      className={`hero-item-card ${isFavorite && "hero-item-card_on"}`}
-      onClick={handleItemClick}
-    >
+    <li className={`hero-item-card`} onClick={handleItemClick}>
       <div className="hero-item-card__content">
         <div className="hero-item-card__image">
           <GameImage game={item} />
         </div>
-
         <div className="hero-item-card__right">
-          <h2 className="hero-item-card__title">{item.name}</h2>
+          <div className="hero-item-card__title-bar">
+            <h2 className="hero-item-card__title">{item.name}</h2>
+            {isLoggedIn && (
+              <div className="hero-item-card__interaction-bar">
+                <InteractionBar game={item} />
+              </div>
+            )}
+          </div>
           <div className="hero-item-card__game-info">
             <div className="hero-item-card__game-base-data">
-              <div className="hero-item-card__game-base-data">
-                <div className="hero-item-card__data">{item.category}</div>
-                <div className="hero-item-card__data">{item.complexity}</div>
-                <div className="hero-item-card__data">{item.gameLength}</div>
-                <div className="hero-item-card__data">
-                  {item.playerCountSlug}
-                </div>
-              </div>
+              <Button
+                text={item.category}
+                isOn={isOptionActive("Category", item.category)}
+                onClick={() => onFilterOptionClick("Category", item.category)}
+                style="attribute"
+              />
+              <Button
+                text={item.complexity}
+                isOn={isOptionActive("Complexity", item.complexity)}
+                onClick={() =>
+                  onFilterOptionClick("Complexity", item.complexity)
+                }
+                style="attribute"
+              />
+              <Button
+                text={item.gameLength}
+                isOn={isOptionActive("Game Length", item.gameLength)}
+                onClick={() =>
+                  onFilterOptionClick("Game Length", item.gameLength)
+                }
+                style="attribute"
+              />
+              <div className="hero-item-card__data">{itemPlayers()}</div>
             </div>
           </div>
           <div className="hero-item-card__descriptions">
@@ -49,7 +70,6 @@ function HeroItemCard({ item, onItemClick, onItemCardClick, isFavorite }) {
           <div className="hero-item-card__game_mechanics">
             {item.mechanics
               ? item.mechanics.map((mechanic, index) => {
-                  // return <MechanicButton key={index} mechanic={mechanic} />;
                   return (
                     <Button
                       style="mechanic"
@@ -65,7 +85,6 @@ function HeroItemCard({ item, onItemClick, onItemCardClick, isFavorite }) {
           </div>
         </div>
       </div>
-      {isLoggedIn && <InteractionBar game={item} />}
     </li>
   );
 }

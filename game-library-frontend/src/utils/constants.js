@@ -188,7 +188,7 @@ export const filters = [
   {
     name: "User Preferences",
     title: "Preferences",
-    options: ["Wants to Play", "Has Played", "Has Not Played", "Likes"],
+    options: ["Interested", "Has Played", "Likes"],
     gameKey: "preferences",
     heroImg: gameLengthImage,
     heroSubtitle: "Log in to save your preferences!",

@@ -83,7 +83,31 @@
   font: var(--font-smallText-mechanic);
   text-align: center;
   height: var(--button-height-smallest);
+  text-overflow: ellipsis;
   /* background-color: transparent; */
+}
+
+.button.button__style_attribute {
+  padding: 8px 4px;
+  background-color: var(--color-white-dark-semiTransparent);
+  /* border: var(--button-border-smallest); */
+  border-radius: 4px;
+  font: var(--font-subheading-itemCards);
+  text-align: center;
+  height: var(--button-height-smallest);
+  color: var(--color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.button.button__style_attribute_item-modal {
+  padding: 8px 4px;
+  background-color: var(--color-primary);
+  border-radius: 4px;
+  font: var(--font-subheading-itemCards);
+  text-align: center;
+  height: var(--button-height-smallest);
+  color: var(--color-secondary);
 }
 
 .button__text.button__style_mechanic {
@@ -96,9 +120,10 @@
   background-color: var(--color-accent);
 }
 
-.button__style_tab {
+.button.button__style_tab {
   background-color: transparent;
   color: var(--color-font-white);
+  font: var(--font-heading-larger);
 }
 
 .button__style_tab.button_on {
@@ -117,4 +142,13 @@
 .button:disabled {
   filter: var(--button-background-adjust-disabled);
   background-color: pink;
+}
+
+@media screen and (max-width: 500px) {
+  .button.button__style_tab {
+    background-color: transparent;
+    padding: 8px 4px;
+    color: var(--color-font-white);
+    font: var(--font-heading-large);
+  }
 }
