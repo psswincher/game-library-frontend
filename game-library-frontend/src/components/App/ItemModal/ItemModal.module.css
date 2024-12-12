@@ -1,25 +1,23 @@
 @import "../Modal/Modal.css";
 
 .modal__content {
-  padding: 20px;
+  padding: 12px;
+
+  background-color: var(--color-background);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-width: 498px;
-  max-height: 629px;
-  background-color: #521f63;
   border-color: black;
-  border-width: 3px;
   box-sizing: border-box;
   color: white;
   border-radius: 8px;
-  box-shadow: 2px 6px 8px rgb(0 0 0 / 35%);
   z-index: 2;
 }
 
 .modal__image {
   width: 100%;
-  max-height: 450px;
+  max-height: 215px;
+  max-width: 215px;
   margin: 0 0 12px;
   border-radius: 8px;
 }
@@ -27,6 +25,35 @@
 .modal__top {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+}
+
+.item-modal__top-info {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.item-modal__top-base-data {
+  display: flex;
+  flex-direction: row;
+  /* width: 90%; */
+
+  justify-content: space-between;
+  letter-spacing: 0.02em;
+}
+
+.item-modal__title {
+  margin: 0;
+  padding: 0;
+  font: var(--font-heading-larger);
+}
+
+.item-modal__short-description {
+  font: var(--font-sectionHeading);
 }
 
 .modal__title {
@@ -34,17 +61,12 @@
 }
 
 .modal__game_data {
-  color: #f2f2ed;
-  color: var(--color-styleWhite);
-  font-family: afacad;
-  font-weight: regular;
-  font-size: 16px;
-  font: var(--font-sectionHeading);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
 }
+
 .modal__bottom {
   padding: 0 12px;
   display: flex;
@@ -66,15 +88,47 @@
   padding: 0 0 32px 32px;
 }
 
-.modal__game_mechanics {
+.modal__game-mechanics {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 3px;
   column-gap: 8px;
   align-items: flex-start;
 }
 
-.modal__game_shortDescription {
-  font-family: afacad;
-  font-size: 14px;
-  line-height: 16px;
+.modal__game_fullDescription {
+  background-color: var(--color-styleWhite);
+  color: var(--color-background);
+  padding: 12px;
+  border-radius: 8px;
+  max-height: 400px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font: var(--font-paragraph);
+}
+
+.item-modal__data {
+  color: var(--color-secondary);
+  font: var(--font-subheading-itemCards);
+}
+
+@media screen and (max-width: 500px) {
+  .modal__top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal__image {
+    justify-self: center;
+    justify-content: center;
+  }
+
+  .modal__game_fullDescription {
+    display: none;
+  }
+
+  .modal__bottom {
+    padding: 0;
+  }
 }

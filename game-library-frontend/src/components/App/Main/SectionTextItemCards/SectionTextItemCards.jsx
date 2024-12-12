@@ -1,25 +1,24 @@
-import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./SectionTextItemCards.css";
 import { useGameFilters } from "../../../../hooks/useGameFilter";
 import NoGamesCard from "../NoGamesCard/NoGamesCard";
-import { useItemCard } from "../../../../hooks/useItemCard";
+import HeroItemCard from "../HeroItemCard/HeroItemCard";
+import ImageItemCard from "../ImageItemCard/ImageItemCard";
+import TextItemCard from "../TextItemCard/TextItemCard";
 
 function SectionItemCards({ onItemClick, onFilterModalClick }) {
   const { filteredGames } = useGameFilters();
-  const { getGridSpan, getColumnSpan, fetchCard } = useItemCard({
-    onItemClick,
-  });
 
-  const memoizedGridSpans = useMemo(() => {
-    return filteredGames.map((game) => {
-      return {
-        id: game._id,
-        gridSpan: getGridSpan(game),
-        columnSpan: getColumnSpan(game),
-      };
-    });
-  }, [filteredGames, getGridSpan, getColumnSpan]);
+  const fetchCard = (item) => {
+    switch (item.cardType) {
+      case "HeroItemCard":
+        return <HeroItemCard item={item} onItemClick={onItemClick} />;
+      case "ImageItemCard":
+        return <ImageItemCard item={item} onItemClick={onItemClick} />;
+      default:
+        return <TextItemCard item={item} onItemClick={onItemClick} />;
+    }
+  };
 
   const itemVariants = {
     hidden: {
@@ -35,17 +34,19 @@ function SectionItemCards({ onItemClick, onFilterModalClick }) {
         scaleX: {
           type: "tween",
           duration: 0.3,
-          delay: 0.3,
+          delay: 0.1,
         },
       },
-      exit: {
-        scaleX: 0,
-        originX: 0.5,
-        transition: {
-          scaleX: {
-            type: "tween",
-            duration: 0.3,
-          },
+    },
+    exit: {
+      scaleX: 0,
+      opacity: 0,
+      originX: 0.5,
+      transition: {
+        scaleX: {
+          type: "tween",
+          duration: 0.3,
+          delay: 0.1,
         },
       },
     },
@@ -57,11 +58,8 @@ function SectionItemCards({ onItemClick, onFilterModalClick }) {
         <AnimatePresence mode="sync">
           {filteredGames.length > 0
             ? filteredGames.map((item) => {
-                const { gridSpan, columnSpan } = memoizedGridSpans.find(
-                  (span) => span.id === item._id
-                );
-                const key = item._id + gridSpan + columnSpan;
-                console.log(key);
+                const key = item._id;
+
                 return (
                   <motion.div
                     key={key}
@@ -70,20 +68,7 @@ function SectionItemCards({ onItemClick, onFilterModalClick }) {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    transition={{
-                      layout: {
-                        type: "tween",
-                        duration: 0.4,
-                        delay: 0.25,
-                        ease: "easeInOut",
-                      },
-                    }}
-                    style={{
-                      gridRow: gridSpan,
-                      gridColumn: columnSpan,
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    className={item.cardType}
                   >
                     {fetchCard(item)}
                   </motion.div>

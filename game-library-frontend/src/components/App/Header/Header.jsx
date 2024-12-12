@@ -1,16 +1,14 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./Header.css";
-import logo from "../../../assets/Logo.svg";
 import filterIcon from "../../../assets/magnifyingIcon.svg";
-import buttonHamburger from "../../../assets/button-hamburger.svg";
 import { useGameFilters } from "../../../hooks/useGameFilter";
 import { motion, useAnimation } from "framer-motion";
 import UserInfo from "../UserInfo/UserInfo.jsx";
 import FilterBar from "../FilterBar/FilterBar.jsx";
+import { IsLoggedInContext } from "../../../contexts/IsLoggedInContext.jsx";
+import { CurrentUserContext } from "../../../contexts/CurrentUserContext.jsx";
 function Header({
   onProfileClick,
-  currentUser,
-  isLoggedIn,
   onFilterModalClick,
   onSignUpClick,
   onLoginClick,
@@ -19,8 +17,13 @@ function Header({
 }) {
   const { getActiveFilterCount } = useGameFilters();
   const controls = useAnimation();
-
+  const { isLoggedIn } = useContext(IsLoggedInContext);
+  const { currentUser } = useContext(CurrentUserContext);
   const [pulse, setPulse] = useState(false);
+
+  useEffect(() => {
+    console.log("Current User: ", currentUser);
+  }, [currentUser]);
 
   useEffect(() => {
     if (getActiveFilterCount() > 0) {
@@ -54,13 +57,12 @@ function Header({
         left: 0,
         width: "100%",
         zIndex: 2,
-        padding: "20px",
         color: "white",
-        backdropFilter: "blur(3px)", // Optional: Adds a slight blur effect
+        backdropFilter: "blur(3px)",
       }}
       transition={{ duration: 0.3 }}
     >
-      <div className="header__container header__container-desktop">
+      <div className="header__container header__container_desktop">
         <div className="header__left">
           {/* <img className="header__logo" src={logo} /> */}
           <div className="header__title">Home</div>
@@ -82,7 +84,13 @@ function Header({
               Log In
             </button>
           )}
-          {isLoggedIn && currentUser && <UserInfo />}
+          {isLoggedIn && currentUser && (
+            <UserInfo
+              name={currentUser.name}
+              avatar={currentUser.avatar}
+              onClick={onProfileClick}
+            />
+          )}
           <button
             className={`header__filter-button ${
               getActiveFilterCount() > 0 && "header__filters-on"
@@ -100,17 +108,42 @@ function Header({
           </button>
         </div>
       </div>
-      <div className="header__container header__container-mobile">
-        <div className="header__top">
-          <img className="header__logo" src={logo} />
-          <button className="header__profile-button" onClick={onProfileClick}>
-            <img
-              className="header__profile-button-image"
-              src={buttonHamburger}
+      <div className="header__container header__container_mobile">
+        <div className="header__title">Home</div>
+        <div className="header__right">
+          {!isLoggedIn && (
+            <button className="header__text-button" onClick={onSignUpClick}>
+              Sign Up
+            </button>
+          )}
+          {!isLoggedIn && (
+            <button className="header__text-button" onClick={onLoginClick}>
+              Log In
+            </button>
+          )}
+          {isLoggedIn && currentUser && (
+            <UserInfo
+              name={currentUser.name}
+              avatar={currentUser.avatar}
+              onClick={onProfileClick}
             />
+          )}
+          <button
+            className={`header__filter-button ${
+              getActiveFilterCount() > 0 && "header__filters-on"
+            } ${pulse && "pulse"}`}
+            onClick={onFilterModalClick}
+          >
+            <div
+              className={`header__filter-button-count ${
+                getActiveFilterCount() > 0 && "header__filter-button-count_on"
+              } ${pulse && "pulse"}`}
+            >
+              {getActiveFilterCount()}
+            </div>
+            <img className="header__filter-button-image" src={filterIcon} />
           </button>
         </div>
-        <div className="header__bottom"></div>
       </div>
     </motion.header>
   );

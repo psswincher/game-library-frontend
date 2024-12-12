@@ -5,6 +5,9 @@
   width: 100%;
   overflow: hidden;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-image__placeholder {
@@ -29,10 +32,9 @@
 
 /* Image styles */
 .game-image__image {
-  height: 100%;
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
   transition: opacity 0.3s ease-in-out;
   border-radius: 8px;
 }

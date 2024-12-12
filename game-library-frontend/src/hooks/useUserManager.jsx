@@ -9,47 +9,23 @@ export const useUserManager = (api) => {
   const [userPlayedGames, setUserPlayedGames] = useState([]);
   const [userWantedGames, setUserWantedGames] = useState([]);
 
-  const handleLogin = ({ email, password }) => {
-    const user = { email, password };
-
-    const request = () => {
-      return api.signIn(user).then((res) => {
-        setCurrentUser(res.user);
-        setIsLoggedIn(true);
-        setToken(res.token);
-        console.log("User logged in", res.name);
-      });
-    };
-    return request;
-  };
-
-  const handleLikeGame = ({ gameId }) => {
-    const request = () => {
-      return api
-        .addUserLikedGame({
-          gameId: gameId,
-          token: getToken(),
-        })
-        .then((res) => {
-          console.log("handeLike res", res);
-          setUserLikedGames(res.user.likedGames);
-        });
-    };
-    return request;
-  };
-  const handleUnlikeGame = ({ gameId }) => {
-    const request = () => {
-      return api
-        .removeUserLikedGame({
-          gameId: gameId,
-          token: getToken(),
-        })
-        .then((res) => {
-          console.log("handleUnlike res", res);
-          setUserLikedGames(res.user.likedGames);
-        });
-    };
-    return request;
+  const handleUserLogin = (res) => {
+    console.log("Logging in user", res);
+    const user = createUser(res);
+    if (user && res.token) {
+      setCurrentUser(user);
+      if (res.likedGames) setUserLikedGames(res.likedGames);
+      if (res.playedGames) setUserPlayedGames(res.playedGames);
+      if (res.wantedGames) setUserWantedGames(res.wantedGames);
+      setToken(res.token);
+      setIsLoggedIn(true);
+      return currentUser;
+    } else {
+      console.error(
+        "Unable to set current user. User or token not in response."
+      );
+      return undefined;
+    }
   };
 
   const updateUserLikedGames = (res) => {
@@ -110,6 +86,19 @@ export const useUserManager = (api) => {
     return !userPlayedGames.includes(game._id);
   };
 
+  const createUser = (res) => {
+    if (res.name && res.avatar && res.email) {
+      const user = {
+        name: res.name,
+        avatar: res.avatar,
+        email: res.email,
+      };
+      return user;
+    }
+    console.log("Unable to create user. Response does not fully define.", res);
+    return undefined;
+  };
+
   useEffect(() => {
     const jwt = getToken();
     if (!jwt) return;
@@ -144,11 +133,8 @@ export const useUserManager = (api) => {
     userPlayedGames,
 
     userLikesGame,
-
+    handleUserLogin,
     handleSignUp,
-    handleLogin,
-    handleLikeGame,
-    handleUnlikeGame,
     userLikedGames,
     isLoggedIn,
     currentUser,

@@ -1,33 +1,50 @@
 .filter-modal-filter__list-container {
   list-style-type: none;
   width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 .filter-modal__top {
   display: flex;
-  flex-direction: row;
-  column-gap: 24px;
+  flex-direction: column;
+  row-gap: 8px;
 }
 .filter-modal-filter__title {
-  font: var(--font-subheading);
+  font: var(--font-heading-large);
   color: var(--color-font-white);
-  width: max-content;
-  display: flex;
-  flex-direction: row;
-  column-gap: 4px;
+  width: 120px;
+}
+
+.filter-modal-filter__toggle-description {
+  font: var(--font-smallText);
+  width: 120px;
 }
 
 .filter-modal-filter__options {
-  padding: 20px;
+  max-width: 80%;
   margin: 0;
   display: flex;
-  align-items: stretch;
-  gap: 12px;
   flex-direction: row;
-  flex-flow: wrap;
-
-  display: grid;
-
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-
+  flex-wrap: wrap;
+  gap: 8px;
   justify-content: left;
+  height: min-content;
+  padding: 0 8px;
+}
+
+@media screen and (max-width: 500px) {
+  .filter-modal-filter__title {
+    width: 85px;
+  }
+
+  .filter-modal-filter__list-container {
+    gap: 8px;
+  }
+  .filter-modal-filter__options {
+    row-gap: 4px;
+    column-gap: 6px;
+  }
+  .filter-modal-filter__toggle-description {
+    width: 85px;
+  }
 }

@@ -1,20 +1,13 @@
 .text-item-card {
   height: 100%;
-  width: 100%;
+
+  min-height: 130px;
+  min-width: 325px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   background-color: var(--color-styleWhite);
-  /* background: linear-gradient(
-    315deg,
-    rgba(252, 219, 61, 1) 12%,
-    rgba(242, 242, 237, 1) 39%
-  ); */
-  /* border: dashed 0.5px var(--color-background); */
   border-radius: 6px;
-}
-
-.text-item-card__clicked {
-  background-color: pink;
 }
 
 .text-item-card__content {
@@ -23,6 +16,7 @@
   color: var(--color-background);
   display: flex;
   flex-direction: column;
+  row-gap: 4px;
 }
 
 .text-item-card__top {
@@ -69,7 +63,7 @@
 .text-item-card__game-base-data {
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
   letter-spacing: 0.02em;
 }
@@ -96,6 +90,6 @@
   }
 
   .text-item-card__title {
-    font-size: 1rem;
+    /* font-size: 1rem; */
   }
 }

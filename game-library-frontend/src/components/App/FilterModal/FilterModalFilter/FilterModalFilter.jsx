@@ -23,6 +23,13 @@ function FilterModalFilter({ gameFilter }) {
             }
           />
         )}
+        {gameFilter.showModeToggle && (
+          <div className="filter-modal-filter__toggle-description">
+            {filterState[gameFilter.name].mode
+              ? "Show titles that have ANY of the selected filters."
+              : "Show titles that have ALL of the selected filters."}
+          </div>
+        )}
       </div>
       <ul className={`filter-modal-filter__options`}>
         {gameFilter.options.map((option) => {
@@ -32,7 +39,7 @@ function FilterModalFilter({ gameFilter }) {
               text={option}
               isOn={isOptionActive(gameFilter.name, option)}
               onClick={() => onFilterOptionClick(gameFilter.name, option)}
-              style={gameFilter.buttonStyle}
+              style="mechanic"
             />
           );
         })}

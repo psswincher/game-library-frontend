@@ -56,28 +56,37 @@ function InteractionBar({ game }) {
 
   return (
     <div className="interaction-bar">
-      <IconButton
-        className="interaction-bar__button"
-        alt="Want to play this game."
-        icon={wantToPlayIcon}
-        isActive={wantedIsActive(game)}
-        onClick={clickWantedGame}
-      ></IconButton>
-      <IconButton
-        className="interaction-bar__button"
-        alt="I played this game."
-        icon={playedIcon}
-        isActive={playedIsActive(game)}
-        onClick={clickPlayedGame}
-      ></IconButton>
-      <IconButton
-        className="interaction-bar__button"
-        isActive={likeIsActive(game)}
-        alt="Like this game."
-        icon={likeIcon}
-        game={game}
-        onClick={clickLikeGame}
-      ></IconButton>
+      <div className="interaction-bar__button-container">
+        <IconButton
+          className="interaction-bar__button"
+          alt="Want to play this game."
+          icon={wantToPlayIcon}
+          isActive={wantedIsActive(game)}
+          onClick={clickWantedGame}
+        ></IconButton>
+        <div className="interaction-bar__button-title">Interested</div>
+      </div>
+      <div className="interaction-bar__button-container">
+        <IconButton
+          className="interaction-bar__button"
+          alt="I played this game."
+          icon={playedIcon}
+          isActive={playedIsActive(game)}
+          onClick={clickPlayedGame}
+        ></IconButton>
+        <div className="interaction-bar__button-title">Played</div>
+      </div>
+      <div className="interaction-bar__button-container">
+        <IconButton
+          className="interaction-bar__button"
+          isActive={likeIsActive(game)}
+          alt="Like this game."
+          icon={likeIcon}
+          game={game}
+          onClick={clickLikeGame}
+        ></IconButton>
+        <div className="interaction-bar__button-title">Liked</div>
+      </div>
     </div>
   );
 }

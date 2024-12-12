@@ -1,7 +1,6 @@
 import "./FilterMenu.css";
 import { motion } from "framer-motion";
 import dropdownArrowIcon from "../../../../assets/dropdown-arrow-icon.svg";
-import FilterOptionButton from "./FilterOptionButton/FilterOptionButton";
 import { useGameFilters } from "../../../../hooks/useGameFilter";
 import Button from "../../Buttons/Button";
 function FilterMenu({ gameFilter, onFilterClick, activeFilter }) {
@@ -10,7 +9,6 @@ function FilterMenu({ gameFilter, onFilterClick, activeFilter }) {
     onFilterOptionClick,
     getFilterTitle,
     isOptionActive,
-    filterCount,
   } = useGameFilters();
 
   const isActive = isFilterActive(gameFilter.name);
@@ -24,8 +22,8 @@ function FilterMenu({ gameFilter, onFilterClick, activeFilter }) {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.75,
-        staggerChildren: 0.03,
+        delayChildren: 0.3,
+        staggerChildren: 0.015,
       },
     },
   };
@@ -69,7 +67,7 @@ function FilterMenu({ gameFilter, onFilterClick, activeFilter }) {
                 isOn={isOptionActive(gameFilter.name, option)}
                 onClick={() => onFilterOptionClick(activeFilter, option)}
                 isOpen={isOpen}
-                style="secondary"
+                style="mechanic"
                 size="regular"
               />
             </motion.li>

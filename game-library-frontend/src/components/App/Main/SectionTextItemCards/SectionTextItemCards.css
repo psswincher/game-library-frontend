@@ -1,20 +1,15 @@
 .text-item-cards {
-  /* height: 300vh; */
-  overflow: hidden;
-
-  /* padding: 20px; */
-  /* background-color: var(--color-styleWhite); */
+  padding: 0;
+  margin: 0 auto;
 }
 
 .text-item-cards__list {
   list-style-type: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
-  justify-items: stretch;
-  width: 100%;
+  grid-template-columns: repeat(3, 325px);
   grid-auto-flow: dense;
   gap: 16px;
+  max-width: 1200px;
 }
 
 .text-item-cards__header-container {
@@ -55,10 +50,39 @@
   position: relative;
 }
 
-.item @media screen and (max-width: 500px) {
+.TextItemCard {
+  grid-row: auto;
+  grid-column: auto;
+}
+
+.ImageItemCard {
+  grid-row: span 2;
+  grid-column: span 1;
+}
+
+.HeroItemCard {
+  grid-row: span 3;
+  grid-column: span 3;
+}
+
+@media screen and (max-width: 1040px) {
   .text-item-cards__list {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    row-gap: 16px;
-    column-gap: 15px;
+    grid-template-columns: repeat(2, minmax(250px, 500px));
+  }
+
+  .HeroItemCard {
+    grid-row: span 2;
+    grid-column: span 2;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .text-item-cards__list {
+    grid-template-columns: repeat(1, minmax(250px, 500px));
+  }
+
+  .HeroItemCard {
+    grid-row: span 3;
+    grid-column: span 1;
   }
 }

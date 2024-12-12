@@ -22,7 +22,11 @@ const Toggle = ({
         className="toggle"
         initial={{ x: 0 }}
         animate={{ x: isOptionOne ? 2 : "115%" }}
-        transition={{ type: "spring", stiffness: 50, duration: 0.05 }}
+        transition={{
+          type: "spring",
+          stiffness: 100,
+          damping: 10,
+        }}
       ></motion.div>
       <div className="toggle__options">
         {isImage ? (

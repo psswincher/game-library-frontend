@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./FilterModal.module.css";
-// import closeModalIcon from "../../../assets/close-modal-icon.svg";
 import Modal from "../Modal/Modal";
 import { filters } from "../../../utils/constants";
 import FilterModalFilter from "./FilterModalFilter/FilterModalFilter";
 import SearchBar from "./SearchBar/SearchBar";
 import useSearchBar from "../../../hooks/useSearchBar";
 import Button from "../Buttons/Button";
+import IconButton from "../Buttons/IconButton/IconButton";
+import RefreshIcon from "../../../assets/refresh.svg";
+import { GameFilterContext } from "../../../contexts/GameFilterContext";
+
 function FilterModal({ isOpen, onFilterClick, onFilterSearchBarType }) {
   const { searchTerm, setSearchTerm } = useSearchBar();
   const onSearch = (value) => {
     setSearchTerm(value);
     onFilterSearchBarType(value);
+  };
+
+  const { resetFilters } = useContext(GameFilterContext);
+  const onRefreshFilterClick = () => {
+    resetFilters();
+    console.log("Refresh filter clicked");
   };
 
   const tabs = [
@@ -44,15 +53,23 @@ function FilterModal({ isOpen, onFilterClick, onFilterSearchBarType }) {
       <div className={styles.modal__content}>
         <div className={styles.modal__titleBar}>
           <div className={styles.modal__title}>Find Your Game</div>
+          <div className={styles["filter-modal__refresh-button"]}>
+            <IconButton
+              alt="Refresh search filters."
+              type="button"
+              icon={RefreshIcon}
+              onClick={onRefreshFilterClick}
+            />
+          </div>
         </div>
         <SearchBar searchTerm={searchTerm} onSearch={onSearch}></SearchBar>
-        <div className={styles["modal__tabs-container"]}>
+        <div className={styles["filter-modal__tabs-container"]}>
           {tabs.map((tab, index) => {
             return (
               <div className="filter-modal__button-container" key={index}>
                 <Button
                   type="button"
-                  size="larger"
+                  size="large"
                   style="tab"
                   text={tab.tabName}
                   isOn={tab.tabName === currentTab}
@@ -69,31 +86,30 @@ function FilterModal({ isOpen, onFilterClick, onFilterSearchBarType }) {
             );
           })}
         </div>
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {tabs.map((tab) => {
+            if (tab.tabName !== currentTab) return null;
             return (
-              tab.tabName === currentTab && (
-                <motion.div
-                  key={tab.tabName}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  layout
-                  className={styles["filter-modal__tab-content"]}
-                >
-                  <div className={styles.modal__filters}>
-                    {tab.filters.map((filterName, index) => {
-                      return (
-                        <FilterModalFilter
-                          key={index}
-                          gameFilter={filters[filterIndex[filterName]]}
-                          onFilterClick={onFilterClick}
-                        />
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )
+              <motion.div
+                key={currentTab}
+                initial={{ opacity: 0, x: -200 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 200 }}
+                transition={{ duration: 0.25 }}
+                className={styles["filter-modal__tab-content"]}
+              >
+                <div className={styles["filter-modal__filter-list"]}>
+                  {tab.filters.map((filterName, index) => {
+                    return (
+                      <FilterModalFilter
+                        key={index}
+                        gameFilter={filters[filterIndex[filterName]]}
+                        onFilterClick={onFilterClick}
+                      />
+                    );
+                  })}
+                </div>
+              </motion.div>
             );
           })}
         </AnimatePresence>
