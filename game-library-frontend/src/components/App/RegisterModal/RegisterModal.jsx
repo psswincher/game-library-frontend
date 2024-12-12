@@ -11,7 +11,9 @@ const RegisterModal = ({
   altButtonText,
   handleAltButton,
 }) => {
-  const { values, handleChange, setValues } = useForm(initialFormValues.signUp);
+  const { values, handleChange, setValues, errorMessages } = useForm(
+    initialFormValues.signUp
+  );
 
   useEffect(() => {
     setValues(initialFormValues.signUp);
@@ -44,10 +46,9 @@ const RegisterModal = ({
           value={values.email}
           onChange={handleChange}
         />
-        <span
-          className="modal__input_type_error email-error"
-          id="email-input-error"
-        ></span>
+        <div className="modal__error">
+          {errorMessages["email"] && errorMessages["email"]}
+        </div>
       </label>
       <label htmlFor="password" className={"modal__label"}>
         Password*
@@ -55,16 +56,15 @@ const RegisterModal = ({
           name="password"
           id="password"
           className={"modal__input"}
-          type="text"
+          type="password"
           placeholder="Password"
           required
           value={values.password}
           onChange={handleChange}
         />
-        <span
-          className="modal__input_type_error password-error"
-          id="password-input-error"
-        ></span>
+        <div className="modal__error">
+          {errorMessages["password"] && errorMessages["password"]}
+        </div>
       </label>
       <label htmlFor="confirmPassword" className={"modal__label"}>
         Confirm Password*
@@ -72,16 +72,15 @@ const RegisterModal = ({
           name="confirmPassword"
           id="confirmPassword"
           className={"modal__input"}
-          type="text"
+          type="password"
           placeholder="Password"
           required
           value={values.confirmPassword}
           onChange={handleChange}
         />
-        <span
-          className="modal__input_type_error password-error"
-          id="password-input-error"
-        ></span>
+        <div className="modal__error">
+          {errorMessages["confirmPassword"] && errorMessages["confirmPassword"]}
+        </div>
       </label>
       <label htmlFor="name" className={"modal__label"}>
         Name
@@ -95,10 +94,9 @@ const RegisterModal = ({
           value={values.name}
           onChange={handleChange}
         />
-        <span
-          className="modal__input_type_error name-error"
-          id="name-input-error"
-        ></span>
+        <div className="modal__error">
+          {errorMessages["name"] && errorMessages["name"]}
+        </div>
       </label>
       <label htmlFor="avatar" className={"modal__label"}>
         Avatar URL
@@ -112,10 +110,9 @@ const RegisterModal = ({
           value={values.avatar}
           onChange={handleChange}
         />
-        <span
-          className="modal__input_type_error avatar-input-error"
-          id="avatar-input-error"
-        ></span>
+        <div className="modal__error">
+          {errorMessages["url"] && errorMessages["url"]}
+        </div>
       </label>
     </ModalWithForm>
   );

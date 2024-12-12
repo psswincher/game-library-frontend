@@ -1,0 +1,5 @@
+.modal__error {
+  color: pink;
+  height: 12px;
+  display: inline-block;
+}

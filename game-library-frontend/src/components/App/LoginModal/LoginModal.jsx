@@ -1,12 +1,23 @@
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { useForm } from "../../../hooks/useForm";
+import style from "./LoginModal.module.css";
 
 import { initialFormValues } from "../../../utils/constants";
 
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
 
 const LoginModal = ({ isOpen, onLogin, altButtonText, handleAltButton }) => {
-  const { values, handleChange, setValues } = useForm(initialFormValues.signUp);
+  const {
+    values,
+    handleChange,
+    setValues,
+    errorMessages,
+    handleBlur,
+    touchedFields,
+    errorVariants,
+  } = useForm(initialFormValues.signUp);
 
   useEffect(() => {
     setValues(initialFormValues.signUp);
@@ -37,11 +48,13 @@ const LoginModal = ({ isOpen, onLogin, altButtonText, handleAltButton }) => {
             required
             value={values.email}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
-          <span
-            className="modal__input_type_error email-error"
-            id="email-input-error"
-          ></span>
+          <div className={style["modal__error-placeholder"]}>
+            {touchedFields["email"] && errorMessages["email"] && (
+              <FormErrorMessage message={errorMessages["email"]} />
+            )}
+          </div>
         </label>
         <label htmlFor="password" className={"modal__label"}>
           Password
@@ -49,16 +62,18 @@ const LoginModal = ({ isOpen, onLogin, altButtonText, handleAltButton }) => {
             name="password"
             id="password"
             className={"modal__input"}
-            type="text"
+            type="password"
             placeholder="Password"
             required
             value={values.password}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
-          <span
-            className="modal__input_type_error password-error"
-            id="password-input-error"
-          ></span>
+          <div className={style["modal__error-placeholder"]}>
+            {touchedFields["password"] && errorMessages["password"] && (
+              <FormErrorMessage message={errorMessages["password"]} />
+            )}
+          </div>
         </label>
       </div>
     </ModalWithForm>

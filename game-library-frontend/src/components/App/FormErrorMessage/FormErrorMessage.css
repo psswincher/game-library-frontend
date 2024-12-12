@@ -1,0 +1,5 @@
+.form-error-message {
+  color: var(--color-accent);
+  height: 24px;
+  display: inline-block;
+}

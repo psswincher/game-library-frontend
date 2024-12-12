@@ -70,6 +70,13 @@
   line-height: 20px;
 }
 
+.modal__error-placeholder {
+  height: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
 .modal__submit:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }

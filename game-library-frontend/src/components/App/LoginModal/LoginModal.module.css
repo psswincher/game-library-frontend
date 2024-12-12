@@ -1,4 +1,4 @@
-@import "../Modal/Modal.css";
+@import "../ModalWithForm/ModalWithForm.module.css";
 
 .modal__content {
   padding: 40px;
