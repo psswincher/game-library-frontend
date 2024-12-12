@@ -8,6 +8,13 @@ This project's goal is to help users quickly and easily find a board game to pla
 
 While backend features are detailed in the backend readme, it is important to note that game collection data is initially created in an Airtable base, allowing collection owners to maintain and share game information as they see fit.
 
+## Technologies Used
+
+- ReactJS - Vite
+- Framer Motion
+- AWS Buckets
+- Custom Backend
+
 ## Game Presentation
 
 A RESTful API with a custom backend fetches game data from a cloud driven database. Game images are stored in an AWS Bucket, with the database providing urls to the games.
@@ -44,3 +51,10 @@ Users can register an account with their name and avatar. Upon doing so, users c
 Users can then filter the collection by these preferences.
 
 Because game data is drawn from an Airtable base and user data is solely stored in the custom backend, a decorator pattern is used to add user preferences to game data upon logging in. This saves the app from having to recalculate the user's preferences for each game when viewing the game, instead injecting those preferences in one operation.
+
+## Framer Motion Animation
+
+Lightweight use of the Framer Motion library is used in this website to make navigation more pleasant and to highlight certain functionality:
+
+- the css grid layout of game cards is driven by framer motion to make filtering games in and out of the view fun
+- mechanics buttons have a one time entrance animation to demonstrate to the user that they are buttons
