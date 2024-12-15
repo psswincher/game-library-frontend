@@ -8,6 +8,10 @@ This project's goal is to help users quickly and easily find a board game to pla
 
 While backend features are detailed in the backend readme, it is important to note that game collection data is initially created in an Airtable base, allowing collection owners to maintain and share game information as they see fit.
 
+## Setup
+
+This frontend makes use of a custom api whose url is stored in ./utils/constants.js in the apiInfo.baseUrl variable. By default, that variable is currently "http://localhost:3001/"
+
 ## Technologies Used
 
 - ReactJS - Vite

@@ -10,7 +10,7 @@ export const useUserManager = (api) => {
   const [userWantedGames, setUserWantedGames] = useState([]);
 
   const handleUserLogin = (res) => {
-    console.log("Logging in user", res);
+    // console.log("Logging in user", res);
     const user = createUser(res);
     if (user && res.token) {
       setCurrentUser(user);
@@ -105,7 +105,7 @@ export const useUserManager = (api) => {
     api
       .getUserInfo(jwt)
       .then((res) => {
-        console.log("Use effect res", res);
+        // console.log("Use effect res", res);
         setIsLoggedIn(true);
         setCurrentUser(res.user);
         res.user.likedGames

@@ -16,7 +16,7 @@ export function useGameLibrary() {
   const [libraryHash, setLibraryHash] = useState({});
 
   const initializeLibrary = (rawGameData) => {
-    console.log("initializing library", rawGameData);
+    // console.log("initializing library", rawGameData);
     const gameData = rawGameData.data;
     const hash = {};
     gameData.forEach((game, index) => {

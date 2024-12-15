@@ -4,7 +4,7 @@ import filterIcon from "../../../assets/magnifyingIcon.svg";
 import { useGameFilters } from "../../../hooks/useGameFilter";
 import { motion, useAnimation } from "framer-motion";
 import UserInfo from "../UserInfo/UserInfo.jsx";
-import FilterBar from "../FilterBar/FilterBar.jsx";
+// import FilterBar from "../FilterBar/FilterBar.jsx";
 import { IsLoggedInContext } from "../../../contexts/IsLoggedInContext.jsx";
 import { CurrentUserContext } from "../../../contexts/CurrentUserContext.jsx";
 function Header({
@@ -12,18 +12,14 @@ function Header({
   onFilterModalClick,
   onSignUpClick,
   onLoginClick,
-  onFilterClick,
-  activeFilter,
+  // onFilterClick,
+  // activeFilter,
 }) {
   const { getActiveFilterCount } = useGameFilters();
   const controls = useAnimation();
   const { isLoggedIn } = useContext(IsLoggedInContext);
   const { currentUser } = useContext(CurrentUserContext);
   const [pulse, setPulse] = useState(false);
-
-  useEffect(() => {
-    console.log("Current User: ", currentUser);
-  }, [currentUser]);
 
   useEffect(() => {
     if (getActiveFilterCount() > 0) {
@@ -68,10 +64,10 @@ function Header({
           <div className="header__title">Home</div>
         </div>
         <div className="header__center">
-          <FilterBar
+          {/* <FilterBar
             onFilterClick={onFilterClick}
             activeFilter={activeFilter}
-          />
+          /> */}
         </div>
         <div className="header__right">
           {!isLoggedIn && (
