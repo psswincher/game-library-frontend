@@ -62,3 +62,5 @@ Lightweight use of the Framer Motion library is used in this website to make nav
 
 - the css grid layout of game cards is driven by framer motion to make filtering games in and out of the view fun
 - mechanics buttons have a one time entrance animation to demonstrate to the user that they are buttons
+
+Thank you for you reviewing all of this code!
