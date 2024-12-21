@@ -10,10 +10,7 @@ import { apiInfo } from "./utils/constants.js";
 import { AppContext } from "./contexts/AppContext.jsx";
 import { GameLibraryContext } from "./contexts/GameLibraryContext.jsx";
 import { CurrentUserContext } from "./contexts/CurrentUserContext.jsx";
-import {
-  GameFilterContextProvider,
-  useGameFilters,
-} from "./hooks/useGameFilter.jsx";
+import { GameFilterContextProvider } from "./hooks/useGameFilter.jsx";
 import { IsLoggedInContext } from "./contexts/IsLoggedInContext.jsx";
 import RegisterModal from "./components/App/RegisterModal/RegisterModal.jsx";
 import LoginModal from "./components/App/LoginModal/LoginModal.jsx";

@@ -1,11 +1,13 @@
 import playersImage from "../assets/socialHall.jpg";
 import gameLengthImage from "../assets/game wall-2.jpg";
 import complexityImage from "../assets/calltoadventure.jpg";
-
 export const tempTokenKey = "jwt";
 
 export const apiInfo = {
-  baseUrl: "http://localhost:3001/",
+  baseUrl:
+    process.env.NODE_ENV === "production"
+      ? "https://api.gamelibtest.twilightparadox.com"
+      : "http://localhost:3001",
 };
 
 export const initialFormValues = {
