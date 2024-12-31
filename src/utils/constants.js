@@ -7,7 +7,7 @@ export const apiInfo = {
   baseUrl:
     process.env.NODE_ENV === "production"
       ? "https://api.gamelibtest.twilightparadox.com/"
-      : "http://localhost:3001",
+      : "http://localhost:3001/",
 };
 
 export const initialFormValues = {
