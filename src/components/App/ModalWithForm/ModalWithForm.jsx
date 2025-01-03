@@ -20,9 +20,10 @@ function ModalWithForm({
             type="submit"
             text={submitButtonText}
             onClick={handleSubmit}
+            style="primary"
           />
           {altButtonText && handleAltButton && (
-            <Button type="submit" variant="secondary" text={altButtonText} />
+            <Button type="submit" style="secondary" text={altButtonText} />
           )}
         </div>
       </form>

@@ -1,6 +1,6 @@
-import playersImage from "../assets/socialHall.jpg";
-import gameLengthImage from "../assets/game wall-2.jpg";
-import complexityImage from "../assets/calltoadventure.jpg";
+import playersImage from "../assets/socialHall.webp";
+import gameLengthImage from "../assets/game wall-2.webp";
+import complexityImage from "../assets/calltoadventure.webp";
 export const tempTokenKey = "jwt";
 
 export const apiInfo = {

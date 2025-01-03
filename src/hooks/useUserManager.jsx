@@ -131,7 +131,6 @@ export const useUserManager = (api) => {
     userPlayedGame,
     userNotPlayedGame,
     userPlayedGames,
-
     userLikesGame,
     handleUserLogin,
     handleSignUp,

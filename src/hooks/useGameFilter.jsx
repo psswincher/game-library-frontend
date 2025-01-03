@@ -1,6 +1,5 @@
-import { useReducer, useContext, useState, useEffect } from "react";
+import { useReducer } from "react";
 import { filters } from "../utils/constants";
-import { GameFilterContext } from "../contexts/GameFilterContext";
 
 const initialFilterState = () => {
   const status = {};
@@ -58,13 +57,11 @@ const filterReducer = (state, action) => {
   }
 };
 
-export const GameFilterContextProvider = ({ children, gameLibrary }) => {
+export const useGameFilters = () => {
   const [filterState, dispatch] = useReducer(
     filterReducer,
     initialFilterState()
   );
-  const [filteredGames, setFilteredGames] = useState(gameLibrary);
-
   const onFilterOptionClick = (filter, option) => {
     dispatch({ type: "TOGGLE_FILTER", filter, option });
   };
@@ -154,11 +151,7 @@ export const GameFilterContextProvider = ({ children, gameLibrary }) => {
     return active;
   };
 
-  useEffect(() => {
-    setFilteredGames(filterGames());
-  }, [filterState, gameLibrary]);
-
-  const filterGames = () => {
+  const filterGames = (gameLibrary) => {
     if (isAnyFilterActive()) {
       return gameLibrary.filter((game) => {
         return filters.every((filter) => {
@@ -167,16 +160,24 @@ export const GameFilterContextProvider = ({ children, gameLibrary }) => {
           const mode = filterState[filter.name].mode;
 
           if (mode) {
-            //mode === true means return all games that have any one of these present
+            //mode === true means return all games that have *any one* of these present
             return areAnyOptionsInGameAttribute(filterOptions, game);
           } else {
-            //mode === false means return all games that have all filters present
+            //mode === false means return all games that have *all* filters present
             return areAllOptionsInGameAttribute(filterOptions, game);
           }
         });
       });
     }
     return gameLibrary;
+  };
+
+  const customFilter = (gameLibrary, customFilter) => {
+    if (customFilter && Array.isArray(gameLibrary)) {
+      return gameLibrary.filter((game) => {
+        return game.attributes?.[customFilter];
+      });
+    }
   };
 
   const areAnyOptionsInGameAttribute = (filterOptions, game) => {
@@ -200,29 +201,19 @@ export const GameFilterContextProvider = ({ children, gameLibrary }) => {
     return filterPasses;
   };
 
-  return (
-    <GameFilterContext.Provider
-      value={{
-        filterState,
-        isFilterActive,
-        isOptionActive,
-        filteredGames,
-        onFilterOptionClick,
-        resetFilters,
-        getActiveFilterOptions,
-        getAllActiveFilterOptions,
-        getFilterTitle,
-        filterCount,
-        getActiveFilterCount,
-        setFilterMode,
-        filterGames,
-      }}
-    >
-      {children}
-    </GameFilterContext.Provider>
-  );
-};
-
-export const useGameFilters = () => {
-  return useContext(GameFilterContext);
+  return {
+    filterState,
+    isFilterActive,
+    isOptionActive,
+    onFilterOptionClick,
+    resetFilters,
+    getActiveFilterOptions,
+    getAllActiveFilterOptions,
+    getFilterTitle,
+    filterCount,
+    getActiveFilterCount,
+    setFilterMode,
+    filterGames,
+    customFilter,
+  };
 };

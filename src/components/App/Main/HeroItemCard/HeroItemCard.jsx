@@ -21,7 +21,7 @@ function HeroItemCard({ item, onItemClick }) {
     <li className={`hero-item-card`} onClick={handleItemClick}>
       <div className="hero-item-card__content">
         <div className="hero-item-card__image">
-          <GameImage game={item} />
+          <GameImage game={item} size="large" />
         </div>
         <div className="hero-item-card__right">
           <div className="hero-item-card__title-bar">

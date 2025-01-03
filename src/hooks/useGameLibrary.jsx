@@ -62,6 +62,9 @@ export function useGameLibrary() {
   };
 
   const libraryUserPrefsDecorator = (user) => {
+    if (!user) {
+      return;
+    }
     console.log("Decorating library with user prefs", user);
     const updatedLibrary = [...gameLibrary];
     if (user.likedGames) {
@@ -76,7 +79,7 @@ export function useGameLibrary() {
       });
     }
 
-    if (user.likedGames) {
+    if (user.wantedGames) {
       user.wantedGames.forEach((gameId) => {
         setGamePreference(updatedLibrary, gameId, "Interested", true);
       });
