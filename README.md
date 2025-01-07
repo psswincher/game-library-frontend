@@ -14,6 +14,11 @@ Project is deployed to https://www.gamelibtest.twilightparadox.com/
 
 This frontend makes use of a custom api whose url is stored in ./utils/constants.js in the apiInfo.baseUrl variable. By default, that variable is currently "http://localhost:3001/"
 
+Please deploy the corresponding backend:
+https://github.com/psswincher/game-library-backend
+
+Backend also requires credentials to be added to a .env in the root directory. Credentials provided to tripleten tutor, Kevin L.
+
 ## Technologies Used
 
 - ReactJS - Vite
