@@ -83,11 +83,7 @@ function Header({
             </button>
           )}
           {isLoggedIn && currentUser && (
-            <UserInfo
-              name={currentUser.name}
-              avatar={currentUser.avatar}
-              onClick={onProfileClick}
-            />
+            <UserInfo name={currentUser.name} onClick={onProfileClick} />
           )}
           <button
             className={`header__filter-button ${

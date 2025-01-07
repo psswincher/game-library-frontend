@@ -16,7 +16,6 @@ export function useGameLibrary() {
   const [libraryHash, setLibraryHash] = useState({});
 
   const initializeLibrary = (rawGameData) => {
-    // console.log("initializing library", rawGameData);
     const gameData = rawGameData.data;
     const hash = {};
     gameData.forEach((game, index) => {
@@ -62,10 +61,11 @@ export function useGameLibrary() {
   };
 
   const libraryUserPrefsDecorator = (user) => {
+    console.log("Decorating library with user prefs", user);
     if (!user) {
       return;
     }
-    console.log("Decorating library with user prefs", user);
+
     const updatedLibrary = [...gameLibrary];
     if (user.likedGames) {
       user.likedGames.forEach((gameId) => {
@@ -89,17 +89,24 @@ export function useGameLibrary() {
   };
 
   const setGamePreference = (updatedLibrary, gameId, preference, state) => {
+    if (!isGameInLibrary(gameId)) return;
     updatedLibrary[libraryHash[gameId]].attributes[preference] = state;
   };
 
   const getGame = (gameId) => {
-    if (libraryHash[gameId]) {
+    if (isGameInLibrary(gameId)) {
       return gameLibrary[libraryHash[gameId]];
-    } else {
-      console.log(`Can't getGame, id ${gameId} is not in library.`);
     }
   };
 
+  const isGameInLibrary = (gameId) => {
+    if (libraryHash[gameId] && gameLibrary[libraryHash[gameId]]) {
+      return true;
+    } else {
+      // console.error("Game not in library:", gameId);
+      return false;
+    }
+  };
   const updateLibraryGamePlayed = (game) => {
     const updatedLibrary = [...gameLibrary];
     updatedLibrary[libraryHash[game._id]].attributes["Has Played"] =

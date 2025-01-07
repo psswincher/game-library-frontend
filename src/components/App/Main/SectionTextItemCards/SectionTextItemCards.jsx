@@ -1,8 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext, useState, useEffect, useMemo } from "react";
+
 import "./SectionTextItemCards.css";
+
 import { GameFilterContext } from "../../../../contexts/GameFilterContext";
 import { GameLibraryContext } from "../../../../contexts/GameLibraryContext";
+
 import NoGamesCard from "../NoGamesCard/NoGamesCard";
 import ItemCard from "../ItemCard/ItemCard";
 
@@ -60,25 +63,21 @@ function SectionItemCards({ onItemClick, onFilterModalClick, sectionFilter }) {
         <AnimatePresence mode="sync">
           {Array.isArray(filteredSectionGames) &&
           filteredSectionGames.length > 0 ? (
-            filteredSectionGames.map((item, index) => {
+            filteredSectionGames.map((item) => {
               const key = item._id;
-              if (index <= 50) {
-                return (
-                  <motion.div
-                    key={key}
-                    layout="position"
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className={item.cardType}
-                  >
-                    <ItemCard item={item} onItemClick={onItemClick} />
-                  </motion.div>
-                );
-              } else {
-                return;
-              }
+              return (
+                <motion.div
+                  key={key}
+                  layout="position"
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className={item.cardType}
+                >
+                  <ItemCard item={item} onItemClick={onItemClick} />
+                </motion.div>
+              );
             })
           ) : (
             <NoGamesCard onFilterModalClick={onFilterModalClick} />

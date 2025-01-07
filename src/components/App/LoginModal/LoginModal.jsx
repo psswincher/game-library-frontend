@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useForm } from "../../../hooks/useForm";
 import style from "./LoginModal.module.css";
 
@@ -16,8 +15,10 @@ const LoginModal = ({ isOpen, onLogin, altButtonText, handleAltButton }) => {
     errorMessages,
     handleBlur,
     touchedFields,
-    errorVariants,
+    clearForm,
   } = useForm(initialFormValues.signUp);
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setValues(initialFormValues.signUp);
@@ -25,7 +26,16 @@ const LoginModal = ({ isOpen, onLogin, altButtonText, handleAltButton }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(values);
+    onLogin(values)
+      .then(() => {
+        clearForm();
+        setErrorMessage("");
+      })
+      .catch((err) => {
+        console.log("error passed back into modal");
+        console.log(err);
+        setErrorMessage("Login credentials invalid!");
+      });
   };
 
   return (
@@ -75,6 +85,7 @@ const LoginModal = ({ isOpen, onLogin, altButtonText, handleAltButton }) => {
             )}
           </div>
         </label>
+        <FormErrorMessage message={errorMessage} />
       </div>
     </ModalWithForm>
   );

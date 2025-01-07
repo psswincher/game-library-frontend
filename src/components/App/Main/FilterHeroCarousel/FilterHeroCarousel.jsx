@@ -10,23 +10,24 @@ function FilterHeroCarousel() {
     useContext(GameFilterContext);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const heroFilters = filters.filter((filter) => {
+    return filter.heroFilter === true;
+  }, 0);
+
   const nextSlide = () => {
-    let newIndex = (currentIndex + 1) % filters.length;
-    while (!filters[newIndex].heroFilter) {
-      newIndex = (newIndex + 1) % filters.length;
-    }
+    const newIndex =
+      currentIndex + 1 > heroFilters.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
 
   const prevSlide = () => {
-    let newIndex = (currentIndex - 1 + filters.length) % filters.length;
-    while (!filters[newIndex].heroFilter) {
-      newIndex = (newIndex - 1 + filters.length) % filters.length;
-    }
+    const newIndex =
+      currentIndex - 1 < 0 ? heroFilters.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
-  const currentFilter = filters[currentIndex];
+  const currentFilter = heroFilters[currentIndex];
 
   return (
     <section className="filter-hero">

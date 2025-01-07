@@ -94,23 +94,15 @@ function App() {
 
   const { isOpen, setActiveModal, closeActiveModal } = useModal();
 
+  //on start, fetch games from API and initialize library data
   useEffect(() => {
     handleRequests(getGames(), [initializeLibrary, setFilteredGames]);
   }, []);
 
-  // useEffect(() => {
-  //   setSearchedGameLibrary(gameLibrary);
-  // }, [gameLibrary]);
-
-  //whenever the filters or the base game library data changes, re filter the games
+  //when a filtere is added, game library is updated or user logs in, set the viewable library data
   useEffect(() => {
-    console.log("Set filtered games triggered");
     setFilteredGames(filterGames(gameLibrary));
-  }, [filterState, gameLibrary]);
-
-  useEffect(() => {
-    libraryUserPrefsDecorator(currentUser);
-  }, [currentUser]);
+  }, [filterState, gameLibrary, currentUser]);
 
   const onSignUp = ({ name, email, avatar, password }) => {
     const user = { name, email, avatar, password };
@@ -119,7 +111,11 @@ function App() {
 
   const onLogin = ({ email, password }) => {
     const user = { email, password };
-    return handleRequests(signIn(user), [handleUserLogin, closeActiveModal]);
+    return handleRequests(signIn(user), [
+      handleUserLogin,
+      libraryUserPrefsDecorator,
+      closeActiveModal,
+    ]);
   };
 
   const handleRequest = (request, callbacks = []) => {
@@ -132,18 +128,31 @@ function App() {
 
   function handleRequests(apiCall, resultHandlers = [], otherHandlers = []) {
     setIsLoading(true);
-    apiCall()
-      .then((result) => {
-        if (resultHandlers.length > 0) {
-          resultHandlers.forEach((fn) => fn(result));
-        }
 
-        if (otherHandlers.length > 0) {
-          otherHandlers.forEach((fn) => fn());
-        }
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+    return new Promise((resolve, reject) => {
+      apiCall()
+        .then((result) => {
+          try {
+            if (resultHandlers.length > 0) {
+              resultHandlers.forEach((fn) => fn(result));
+            }
+
+            if (otherHandlers.length > 0) {
+              otherHandlers.forEach((fn) => fn());
+            }
+
+            resolve(result);
+          } catch (err) {
+            reject(err);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    });
   }
 
   const onLikeGameClick = (game) => {

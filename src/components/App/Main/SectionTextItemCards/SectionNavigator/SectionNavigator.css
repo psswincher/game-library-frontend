@@ -1,0 +1,32 @@
+.section-navigator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px;
+}
+
+.section-navigator__arrow {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.section-navigator__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.section-navigator__dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.section-navigator__dot.active {
+  background-color: #333;
+}

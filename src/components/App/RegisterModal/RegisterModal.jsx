@@ -98,22 +98,6 @@ const RegisterModal = ({
           {errorMessages["name"] && errorMessages["name"]}
         </div>
       </label>
-      <label htmlFor="avatar" className={"modal__label"}>
-        Avatar URL
-        <input
-          name="avatar"
-          id="avatar"
-          className={"modal__input"}
-          type="text"
-          placeholder="Avatar URL"
-          required
-          value={values.avatar}
-          onChange={handleChange}
-        />
-        <div className="modal__error">
-          {errorMessages["url"] && errorMessages["url"]}
-        </div>
-      </label>
     </ModalWithForm>
   );
 };
