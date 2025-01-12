@@ -59,14 +59,14 @@ function SectionItemCards({ onItemClick, onFilterModalClick, sectionFilter }) {
 
   return (
     <section className="text-item-cards">
-      <motion.div className="text-item-cards__list">
+      <motion.ul className="text-item-cards__list">
         <AnimatePresence mode="sync">
           {Array.isArray(filteredSectionGames) &&
           filteredSectionGames.length > 0 ? (
             filteredSectionGames.map((item) => {
               const key = item._id;
               return (
-                <motion.div
+                <motion.li
                   key={key}
                   layout="position"
                   variants={itemVariants}
@@ -76,14 +76,14 @@ function SectionItemCards({ onItemClick, onFilterModalClick, sectionFilter }) {
                   className={item.cardType}
                 >
                   <ItemCard item={item} onItemClick={onItemClick} />
-                </motion.div>
+                </motion.li>
               );
             })
           ) : (
             <NoGamesCard onFilterModalClick={onFilterModalClick} />
           )}
         </AnimatePresence>
-      </motion.div>
+      </motion.ul>
     </section>
   );
 }

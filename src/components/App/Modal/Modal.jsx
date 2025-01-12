@@ -36,7 +36,7 @@ function Modal({ children, isOpen }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className={`modal ${isOpen && "modal_open"}`}
+          className={`modal ${isOpen && "modal__open"}`}
           onClick={handleOverlay}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

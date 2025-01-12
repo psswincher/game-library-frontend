@@ -37,7 +37,11 @@ export function useForm(inputValues) {
     }));
   };
 
+  const clearErrors = () => {
+    setErrorMessages({});
+  };
   const clearForm = () => {
+    clearErrors();
     setTouchedFields({});
   };
 

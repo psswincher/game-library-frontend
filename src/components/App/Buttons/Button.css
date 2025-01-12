@@ -30,53 +30,53 @@
 }
 
 /* Sizes */
-.button.button__size_smallest {
+.button.button__size-smallest {
   height: var(--button-height-smallest);
   font-size: var(--font-size-smallest);
 }
 
-.button.button__size_smaller {
+.button.button__size-smaller {
   height: var(--button-height-smaller);
   font-size: var(--font-size-smaller);
 }
 
-.button.button__size_small {
+.button.button__size-small {
   height: var(--button-height-small);
   font-size: var(--font-size-small);
 }
 
-.button.button__size_default {
+.button.button__size-default {
   height: var(--button-height-default);
   font-size: var(--font-size-default);
 }
 
-.button.button__size_large {
+.button.button__size-large {
   height: var(--button-height-large);
   font-size: var(--font-size-large);
 }
 
-.button.button__size_larger {
+.button.button__size-larger {
   height: var(--button-height-larger);
   font-size: var(--font-size-larger);
 }
 
-.button.button__size_largest {
+.button.button__size-largest {
   height: var(--button-height-largest);
   font-size: var(--font-size-largest);
 }
 
 /* Styles */
-.button__style_default {
+.button__style-default {
   background-color: var(--button-style-primary-background);
   color: var(--button-style-secondary-font-color);
 }
 
-.button.button__style_secondary {
+.button.button__style-secondary {
   background-color: var(--button-style-secondary-background);
   color: var(--button-style-secondary-font-color);
 }
 
-.button.button__style_mechanic {
+.button.button__style-mechanic {
   background-color: var(--color-styleWhite);
   border: var(--button-border-smallest);
   border-radius: 4px;
@@ -87,7 +87,7 @@
   /* background-color: transparent; */
 }
 
-.button.button__style_attribute {
+.button.button__style-attribute {
   padding: 8px 4px;
   background-color: var(--color-white-dark-semiTransparent);
   /* border: var(--button-border-smallest); */
@@ -100,7 +100,7 @@
   overflow: hidden;
 }
 
-.button.button__style_attribute_item-modal {
+.button.button__style-attribute-item-modal {
   padding: 8px 4px;
   background-color: var(--color-primary);
   border-radius: 4px;
@@ -110,23 +110,23 @@
   color: var(--color-secondary);
 }
 
-.button__text.button__style_mechanic {
+.button__text.button__style-mechanic {
   font: var(--font-smallText-mechanic);
   text-align: center;
   background-color: transparent;
 }
 
-.button.button_on {
+.button.button__on {
   background-color: var(--color-accent);
 }
 
-.button.button__style_tab {
+.button.button__style-tab {
   background-color: transparent;
   color: var(--color-font-white);
   font: var(--font-heading-larger);
 }
 
-.button__style_tab.button_on {
+.button__style-tab.button__on {
   background-color: transparent;
 }
 
@@ -145,7 +145,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .button.button__style_tab {
+  .button.button__style-tab {
     background-color: transparent;
     padding: 8px 4px;
     color: var(--color-font-white);

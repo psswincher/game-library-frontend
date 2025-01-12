@@ -45,7 +45,7 @@ function ItemCard({ item, onItemClick }) {
       {isVisible ? (
         fetchCard()
       ) : (
-        <div className="item-card__loading">Loading game!</div>
+        <p className="item-card__loading">Loading game!</p>
       )}
     </div>
   );

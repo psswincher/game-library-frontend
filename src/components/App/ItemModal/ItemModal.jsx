@@ -16,7 +16,7 @@ function ItemModal({ item, isOpen }) {
     <Modal isOpen={isOpen}>
       <div className={styles.modal__content}>
         <div className={styles.modal__top}>
-          <GameImage game={item} size="medium" />
+          <GameImage game={item} size="small" />
           <div className={styles["item-modal__top-info"]}>
             <h2 className={styles["item-modal__title"]}>{item.name}</h2>
             <div className={styles["item-modal__top-base-data"]}>
@@ -24,7 +24,7 @@ function ItemModal({ item, isOpen }) {
                 text={item.category}
                 isOn={isOptionActive("Category", item.category)}
                 onClick={() => onFilterOptionClick("Category", item.category)}
-                style="attribute_item-modal"
+                style="attribute-item-modal"
               />
               <Button
                 text={item.complexity}
@@ -32,7 +32,7 @@ function ItemModal({ item, isOpen }) {
                 onClick={() =>
                   onFilterOptionClick("Complexity", item.complexity)
                 }
-                style="attribute_item-modal"
+                style="attribute-item-modal"
               />
               <Button
                 text={item.gameLength}
@@ -40,16 +40,14 @@ function ItemModal({ item, isOpen }) {
                 onClick={() =>
                   onFilterOptionClick("Game Length", item.gameLength)
                 }
-                style="attribute_item-modal"
+                style="attribute-item-modal"
               />
             </div>
-            <div className={styles["item-modal__short-description"]}>
+            <p className={styles["item-modal__short-description"]}>
               {item.shortDescription}
-            </div>
+            </p>
 
-            <div className={styles["item-modal__data"]}>
-              {item.playerCountSlug}
-            </div>
+            <p className={styles["item-modal__data"]}>{item.playerCountSlug}</p>
           </div>
         </div>
         <div className={styles.modal__bottom}>
@@ -69,12 +67,12 @@ function ItemModal({ item, isOpen }) {
                 })
               : null}
           </div>
-          <div className={styles.modal__game_fullDescription}>
+          <p className={styles["modal__game-fullDescription"]}>
             {item.fullDescription}
-          </div>
+          </p>
           {isLoggedIn && <InteractionBar game={item} />}
-          <div className={styles.modal__game_publisher}></div>
-          <div className={styles.modal__buttons}></div>
+          <p className={styles.modal__game_publisher}></p>
+          <p className={styles.modal__buttons}></p>
         </div>
       </div>
     </Modal>

@@ -11,7 +11,10 @@ export default class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`API request Error: ${res.status}`);
+    return Promise.reject({
+      message: `API request Error: ${res.status}`,
+      status: res.status,
+    });
   }
 
   //
@@ -117,7 +120,7 @@ export default class Api {
     });
   }
 
-  addUser({ name, avatar, email, password }) {
+  addUser({ name, email, password }) {
     return this._handleRequest(`${this._baseUrl}signup`, {
       method: "POST",
       headers: {
@@ -125,7 +128,6 @@ export default class Api {
       },
       body: JSON.stringify({
         name,
-        avatar,
         email,
         password,
       }),

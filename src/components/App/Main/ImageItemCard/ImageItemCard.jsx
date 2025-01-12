@@ -16,7 +16,7 @@ function ImageItemCard({ item, onItemClick }) {
   };
 
   return (
-    <li
+    <div
       className={`image-item-card  ${
         item.isFavorite && "image-item-card__highlight"
       }`}
@@ -45,11 +45,11 @@ function ImageItemCard({ item, onItemClick }) {
           />
           <div className="image-item-card__data">{itemPlayers()}</div>
         </div>
-        <div className="image-item-card__game-short-description">
+        <p className="image-item-card__game-short-description">
           {item.shortDescription}
-        </div>
+        </p>
       </div>
-    </li>
+    </div>
   );
 }
 

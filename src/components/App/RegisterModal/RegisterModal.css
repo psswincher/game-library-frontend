@@ -1,3 +1,9 @@
+.modal__label-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
 .modal__error {
   color: pink;
   height: 12px;

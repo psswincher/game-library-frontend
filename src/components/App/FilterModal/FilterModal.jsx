@@ -21,7 +21,6 @@ function FilterModal({ isOpen, onFilterClick, onFilterSearchBarType }) {
   const { resetFilters } = useContext(GameFilterContext);
   const onRefreshFilterClick = () => {
     resetFilters();
-    console.log("Refresh filter clicked");
   };
 
   const tabs = [

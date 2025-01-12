@@ -73,7 +73,11 @@ function FilterHeroCarousel() {
                 className="filter-hero__carousel-button filter-hero__carousel-button_prev"
                 onClick={prevSlide}
               >
-                <img className="filter-hero__arrow_prev" src={arrow}></img>
+                <img
+                  className="filter-hero__arrow_prev"
+                  src={arrow}
+                  alt="previous slide"
+                ></img>
               </button>
               <div className="filter-hero__filter-button-block">
                 {currentFilter.options.map((option) => {
@@ -104,7 +108,11 @@ function FilterHeroCarousel() {
                 }`}
                 onClick={nextSlide}
               >
-                <img className="filter-hero__arrow_next" src={arrow}></img>
+                <img
+                  className="filter-hero__arrow_next"
+                  src={arrow}
+                  alt="previous slide"
+                ></img>
               </button>
             </div>
           </motion.div>

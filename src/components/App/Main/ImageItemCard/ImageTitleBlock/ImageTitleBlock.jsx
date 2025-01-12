@@ -7,7 +7,7 @@ function ImageTitleBlock({ game }) {
       <div className="image-title-block__image">
         <GameImage game={game} size="small" />
       </div>
-      <h2 className="image-title-block__title">{game.name}</h2>
+      <h3 className="image-title-block__title">{game.name}</h3>
     </div>
   );
 }

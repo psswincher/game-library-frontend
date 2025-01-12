@@ -1,5 +1,4 @@
 import Modal from "../Modal/Modal";
-import style from "./ModalWithForm.module.css";
 import Button from "../Buttons/Button";
 
 function ModalWithForm({
@@ -13,9 +12,9 @@ function ModalWithForm({
 }) {
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <form className={style["modal__form"]} onSubmit={handleSubmit}>
+      <form className="modal__form" onSubmit={handleSubmit}>
         {children}
-        <div className={`${style["modal__button-container"]}`}>
+        <div className="modal__button-container">
           <Button
             type="submit"
             text={submitButtonText}
@@ -23,7 +22,12 @@ function ModalWithForm({
             style="primary"
           />
           {altButtonText && handleAltButton && (
-            <Button type="submit" style="secondary" text={altButtonText} />
+            <Button
+              type="button"
+              style="secondary"
+              text={altButtonText}
+              onClick={handleAltButton}
+            />
           )}
         </div>
       </form>

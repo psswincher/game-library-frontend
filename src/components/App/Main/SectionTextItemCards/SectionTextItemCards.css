@@ -5,6 +5,7 @@
 
 .text-item-cards__list {
   list-style-type: none;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 325px);
   grid-auto-flow: dense;
@@ -53,6 +54,7 @@
 .TextItemCard {
   grid-row: auto;
   grid-column: auto;
+  /* justify-content: center; */
 }
 
 .ImageItemCard {
@@ -76,9 +78,9 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
   .text-item-cards__list {
-    grid-template-columns: repeat(1, minmax(250px, 500px));
+    grid-template-columns: minmax(300px, 525px);
   }
 
   .HeroItemCard {

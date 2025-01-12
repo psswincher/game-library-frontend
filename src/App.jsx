@@ -106,7 +106,7 @@ function App() {
 
   const onSignUp = ({ name, email, avatar, password }) => {
     const user = { name, email, avatar, password };
-    handleRequest(handleSignUp(user));
+    return handleRequests(handleSignUp(user), closeActiveModal);
   };
 
   const onLogin = ({ email, password }) => {
@@ -119,11 +119,17 @@ function App() {
   };
 
   const handleRequest = (request, callbacks = []) => {
-    request()
-      .then((response) => {
-        callbacks.forEach((callback) => callback(response));
-      })
-      .catch(console.error);
+    return new Promise((resolve, reject) => {
+      request()
+        .then((response) => {
+          callbacks.forEach((callback) => callback(response));
+          resolve(response); // Resolve the Promise when the request is successful
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error); // Reject the Promise if there is an error
+        });
+    });
   };
 
   function handleRequests(apiCall, resultHandlers = [], otherHandlers = []) {
@@ -322,7 +328,8 @@ function App() {
                     isOpen={isOpen("register-modal")}
                     onSignUp={onSignUp}
                     altButtonText="or Log In"
-                    handleAltButton={onLogin}
+                    handleAltButton={onLoginClick}
+                    closeActiveModal={closeActiveModal}
                   ></RegisterModal>
                 </div>
               </div>

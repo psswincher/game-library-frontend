@@ -119,6 +119,11 @@
   --button-style-mechanic-font-color-disabled: var(--color-white-dark);
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 .page {
   margin: 0;
   background-image: linear-gradient(

@@ -13,7 +13,7 @@ function TextItemCard({ item, onItemClick }) {
   };
 
   return (
-    <motion.li className={`text-item-card`} onClick={handleItemClick}>
+    <motion.div className={`text-item-card`} onClick={handleItemClick}>
       <motion.div className="text-item-card__content">
         <h2 className="text-item-card__title">{item.name}</h2>
         <div className="text-item-card__top">
@@ -42,11 +42,11 @@ function TextItemCard({ item, onItemClick }) {
             <div className="text-item-card__data">{itemPlayers()}</div>
           </div>
         </div>
-        <div className="text-item-card__game-short-description">
+        <p className="text-item-card__game-short-description">
           {item.shortDescription}
-        </div>
+        </p>
       </motion.div>
-    </motion.li>
+    </motion.div>
   );
 }
 

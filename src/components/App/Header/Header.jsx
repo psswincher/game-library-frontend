@@ -45,7 +45,7 @@ function Header({
   }, [controls]);
 
   return (
-    <motion.header
+    <motion.nav
       className="header"
       animate={controls}
       initial={{ backgroundColor: "rgba(82, 31, 99, 1)" }}
@@ -121,11 +121,7 @@ function Header({
             </button>
           )}
           {isLoggedIn && currentUser && (
-            <UserInfo
-              name={currentUser.name}
-              avatar={currentUser.avatar}
-              onClick={onProfileClick}
-            />
+            <UserInfo name={currentUser.name} onClick={onProfileClick} />
           )}
           <button
             className={`header__filter-button ${
@@ -144,7 +140,7 @@ function Header({
           </button>
         </div>
       </div>
-    </motion.header>
+    </motion.nav>
   );
 }
 
