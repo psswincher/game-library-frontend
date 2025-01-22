@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import "./App.css";
 
 import Api from "./utils/api.js";
@@ -96,7 +95,12 @@ function App() {
 
   //on start, fetch games from API and initialize library data
   useEffect(() => {
-    handleRequests(getGames(), [initializeLibrary, setFilteredGames]);
+    setIsLoading(true);
+    handleRequests(
+      getGames(),
+      [initializeLibrary, setFilteredGames],
+      [() => setIsLoading(false)]
+    );
   }, []);
 
   //when a filtere is added, game library is updated or user logs in, set the viewable library data
@@ -133,8 +137,6 @@ function App() {
   };
 
   function handleRequests(apiCall, resultHandlers = [], otherHandlers = []) {
-    setIsLoading(true);
-
     return new Promise((resolve, reject) => {
       apiCall()
         .then((result) => {
@@ -296,6 +298,7 @@ function App() {
                           onItemClick={onItemClick}
                           onFilterModalClick={onFilterModalClick}
                           pageAnimationVariants={pageAnimationVariants}
+                          isLoading={isLoading}
                         />
                       }
                     />
@@ -310,6 +313,7 @@ function App() {
                       }
                     />
                   </Routes>
+
                   <Footer />
                   <ItemModal isOpen={isOpen("item-modal")} item={currentItem} />
                   <FilterModal

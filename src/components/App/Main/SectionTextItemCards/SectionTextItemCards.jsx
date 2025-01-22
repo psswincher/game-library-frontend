@@ -8,11 +8,16 @@ import { GameLibraryContext } from "../../../../contexts/GameLibraryContext";
 
 import NoGamesCard from "../NoGamesCard/NoGamesCard";
 import ItemCard from "../ItemCard/ItemCard";
+import Loading from "../../Loading/Loading";
 
-function SectionItemCards({ onItemClick, onFilterModalClick, sectionFilter }) {
+function SectionItemCards({
+  onItemClick,
+  onFilterModalClick,
+  sectionFilter,
+  isLoading,
+}) {
   const { filteredGames } = useContext(GameLibraryContext);
   const { customFilter } = useContext(GameFilterContext);
-
   const [filteredSectionGames, setFilteredSectionGames] = useState([]);
 
   const memoizedFilteredGames = useMemo(() => {
@@ -60,9 +65,10 @@ function SectionItemCards({ onItemClick, onFilterModalClick, sectionFilter }) {
   return (
     <section className="text-item-cards">
       <motion.ul className="text-item-cards__list">
+        {isLoading && <Loading />}
         <AnimatePresence mode="sync">
-          {Array.isArray(filteredSectionGames) &&
-          filteredSectionGames.length > 0 ? (
+          {!isLoading &&
+            filteredSectionGames.length > 0 &&
             filteredSectionGames.map((item) => {
               const key = item._id;
               return (
@@ -78,9 +84,18 @@ function SectionItemCards({ onItemClick, onFilterModalClick, sectionFilter }) {
                   <ItemCard item={item} onItemClick={onItemClick} />
                 </motion.li>
               );
-            })
-          ) : (
-            <NoGamesCard onFilterModalClick={onFilterModalClick} />
+            })}
+
+          {!isLoading && filteredSectionGames.length === 0 && (
+            <motion.li
+              key="no-games"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <NoGamesCard onFilterModalClick={onFilterModalClick} />
+            </motion.li>
           )}
         </AnimatePresence>
       </motion.ul>
