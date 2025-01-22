@@ -1,4 +1,5 @@
 .form-error-message {
+  font: var(--font-smallButton);
   color: var(--color-accent);
   height: 24px;
   display: inline-block;

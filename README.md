@@ -8,9 +8,16 @@ This project's goal is to help users quickly and easily find a board game to pla
 
 While backend features are detailed in the backend readme, it is important to note that game collection data is initially created in an Airtable base, allowing collection owners to maintain and share game information as they see fit.
 
+Project is deployed to https://www.gamelibtest.twilightparadox.com/
+
 ## Setup
 
 This frontend makes use of a custom api whose url is stored in ./utils/constants.js in the apiInfo.baseUrl variable. By default, that variable is currently "http://localhost:3001/"
+
+Please deploy the corresponding backend:
+https://github.com/psswincher/game-library-backend
+
+Backend also requires credentials to be added to a .env in the root directory. Credentials provided to tripleten tutor, Kevin L.
 
 ## Technologies Used
 
@@ -62,3 +69,5 @@ Lightweight use of the Framer Motion library is used in this website to make nav
 
 - the css grid layout of game cards is driven by framer motion to make filtering games in and out of the view fun
 - mechanics buttons have a one time entrance animation to demonstrate to the user that they are buttons
+
+Thank you for you reviewing all of this code!

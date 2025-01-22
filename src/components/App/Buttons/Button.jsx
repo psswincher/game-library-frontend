@@ -12,7 +12,7 @@ function Button({ onClick, text, isOn, style, type, size, children }) {
     "danger",
     "mechanic",
     "attribute",
-    "attribute_item-modal",
+    "attribute-item-modal",
     "tab",
   ];
   const buttonSizes = [
@@ -98,28 +98,28 @@ function Button({ onClick, text, isOn, style, type, size, children }) {
     if (size !== undefined && size !== null) {
       if (size !== "") {
         return buttonSizes.includes(size)
-          ? "button__size_" + size
-          : "button__size_default";
+          ? "button__size-" + size
+          : "button__size-default";
       } else {
         console.log(`Invalid button size: ${size}`);
       }
     }
-    return "button__size_default";
+    return "button__size-default";
   };
 
   const buttonStyleClass = () => {
     if (style !== undefined && style !== null) {
       return buttonStyles.includes(style)
-        ? "button__style_" + style
-        : "button__style_default";
+        ? "button__style-" + style
+        : "button__style-default";
     } else {
       console.log(`Invalid button style: ${style}`);
     }
-    return "button__style_default";
+    return "button__style-default";
   };
 
   const buttonOnClass = () => {
-    return isButtonOn ? "button_on" : "";
+    return isButtonOn ? "button__on" : "";
   };
 
   const onButtonClick = async (event) => {

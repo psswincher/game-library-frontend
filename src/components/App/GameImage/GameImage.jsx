@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./GameImage.css";
 import fallbackSrc from "../../../assets/kitten.png";
 
-function GameImage({ game }) {
+function GameImage({ game, size }) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -15,15 +15,25 @@ function GameImage({ game }) {
     setIsLoading(false);
   };
 
+  const imageSize = () => {
+    switch (size) {
+      case "large":
+        return `game-image__wrapper_large`;
+      case "medium":
+        return `game-image__wrapper_medium`;
+      case "small":
+        return `game-image__wrapper_small`;
+      default:
+        return `game-image__wrapper_small`;
+    }
+  };
+
   return (
-    <div className={`game-image__wrapper`}>
-      {isLoading && !hasError && (
-        <div className="game-image__placeholder"></div>
-      )}
+    <div className={`game-image__wrapper ${imageSize()}`}>
       <img
         src={game.imageUrl}
         alt={`${game.name} Cover Art`}
-        className={`game-image__image ${isLoading && "game-image__hidden"}`}
+        className={`game-image__image ${!isLoading && "game-image__visible"}`}
         onLoad={handleLoad}
         onError={handleError}
       />

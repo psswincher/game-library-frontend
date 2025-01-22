@@ -1,37 +1,42 @@
 import { useState, useEffect } from "react";
-
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Header from "./components/App/Header/Header";
-import Main from "./components/App/Main/Main";
-import Footer from "./components/App/Footer/Footer";
-import FilterModal from "./components/App/FilterModal/FilterModal";
+
 import Api from "./utils/api.js";
+import { getToken } from "./utils/token.js";
+
 import { apiInfo } from "./utils/constants.js";
 import { AppContext } from "./contexts/AppContext.jsx";
 import { GameLibraryContext } from "./contexts/GameLibraryContext.jsx";
 import { CurrentUserContext } from "./contexts/CurrentUserContext.jsx";
-import {
-  GameFilterContextProvider,
-  useGameFilters,
-} from "./hooks/useGameFilter.jsx";
 import { IsLoggedInContext } from "./contexts/IsLoggedInContext.jsx";
+import { GameFilterContext } from "./contexts/GameFilterContext.jsx";
+
+import { useGameFilters } from "./hooks/useGameFilter.jsx";
+import { useGameLibrary } from "./hooks/useGameLibrary.jsx";
+import { useModal } from "./hooks/useModal.jsx";
+import { useUserManager } from "./hooks/useUserManager.jsx";
+import useApi from "./hooks/useApi.jsx";
+
+import Header from "./components/App/Header/Header";
+import Main from "./components/App/Main/Main";
+import Profile from "./components/App/Profile/Profile.jsx";
+import Footer from "./components/App/Footer/Footer";
+
+import FilterModal from "./components/App/FilterModal/FilterModal";
 import RegisterModal from "./components/App/RegisterModal/RegisterModal.jsx";
 import LoginModal from "./components/App/LoginModal/LoginModal.jsx";
-import { useGameLibrary } from "./hooks/useGameLibrary.jsx";
-import useApi from "./hooks/useApi.jsx";
-import { useUserManager } from "./hooks/useUserManager.jsx";
-import { useModal } from "./hooks/useModal.jsx";
-import { getToken } from "./utils/token.js";
 import ItemModal from "./components/App/ItemModal/ItemModal.jsx";
-
 import ProfileModal from "./components/App/ProfileModal/ProfileModal.jsx";
+
 const api = new Api(apiInfo.baseUrl);
 
 function App() {
-  const [searchedGameLibrary, setSearchedGameLibrary] = useState([]);
+  const [filteredGames, setFilteredGames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
   const [currentItem, setCurrentItem] = useState({});
+
   const {
     gameLibrary,
     initializeLibrary,
@@ -53,6 +58,22 @@ function App() {
   } = useApi(apiInfo.baseUrl);
 
   const {
+    filterState,
+    isFilterActive,
+    isOptionActive,
+    onFilterOptionClick,
+    resetFilters,
+    getActiveFilterOptions,
+    getAllActiveFilterOptions,
+    getFilterTitle,
+    filterCount,
+    getActiveFilterCount,
+    setFilterMode,
+    filterGames,
+    customFilter,
+  } = useGameFilters();
+
+  const {
     handleSignUp,
     userLikesGame,
     userPlayedGame,
@@ -72,18 +93,24 @@ function App() {
 
   const { isOpen, setActiveModal, closeActiveModal } = useModal();
 
+  //on start, fetch games from API and initialize library data
   useEffect(() => {
-    handleRequests(getGames(), [initializeLibrary]);
+    setIsLoading(true);
+    handleRequests(
+      getGames(),
+      [initializeLibrary, setFilteredGames],
+      [() => setIsLoading(false)]
+    );
   }, []);
 
+  //when a filtere is added, game library is updated or user logs in, set the viewable library data
   useEffect(() => {
-    setSearchedGameLibrary(gameLibrary);
-  }, [gameLibrary]);
+    setFilteredGames(filterGames(gameLibrary));
+  }, [filterState, gameLibrary, currentUser]);
 
   const onSignUp = ({ name, email, avatar, password }) => {
     const user = { name, email, avatar, password };
-    handleRequest(handleSignUp(user));
-    console.log(currentUser);
+    return handleRequests(handleSignUp(user), closeActiveModal);
   };
 
   const onLogin = ({ email, password }) => {
@@ -95,40 +122,45 @@ function App() {
     ]);
   };
 
-  const onSignUpClick = () => {
-    setActiveModal("register-modal");
-  };
-
-  const onLoginClick = () => {
-    setActiveModal("login-modal");
-  };
-
-  const onProfileClick = () => {
-    setActiveModal("profile-modal");
-  };
-
   const handleRequest = (request, callbacks = []) => {
-    request()
-      .then((response) => {
-        callbacks.forEach((callback) => callback(response));
-      })
-      .catch(console.error);
+    return new Promise((resolve, reject) => {
+      request()
+        .then((response) => {
+          callbacks.forEach((callback) => callback(response));
+          resolve(response); // Resolve the Promise when the request is successful
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error); // Reject the Promise if there is an error
+        });
+    });
   };
 
   function handleRequests(apiCall, resultHandlers = [], otherHandlers = []) {
-    setIsLoading(true);
-    apiCall()
-      .then((result) => {
-        if (resultHandlers.length > 0) {
-          resultHandlers.forEach((fn) => fn(result));
-        }
+    return new Promise((resolve, reject) => {
+      apiCall()
+        .then((result) => {
+          try {
+            if (resultHandlers.length > 0) {
+              resultHandlers.forEach((fn) => fn(result));
+            }
 
-        if (otherHandlers.length > 0) {
-          otherHandlers.forEach((fn) => fn());
-        }
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+            if (otherHandlers.length > 0) {
+              otherHandlers.forEach((fn) => fn());
+            }
+
+            resolve(result);
+          } catch (err) {
+            reject(err);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    });
   }
 
   const onLikeGameClick = (game) => {
@@ -179,6 +211,22 @@ function App() {
     }
   };
 
+  const onFilterClick = (filter) => {
+    activeFilter === filter ? setActiveFilter("") : setActiveFilter(filter);
+  };
+
+  const onSignUpClick = () => {
+    setActiveModal("register-modal");
+  };
+
+  const onLoginClick = () => {
+    setActiveModal("login-modal");
+  };
+
+  const onProfileClick = () => {
+    setActiveModal("profile-modal");
+  };
+
   const onItemClick = (item) => {
     setCurrentItem(item);
     setActiveModal("item-modal");
@@ -188,15 +236,17 @@ function App() {
     setActiveModal("filter-modal");
   };
 
-  const onFilterClick = (filter) => {
-    activeFilter === filter ? setActiveFilter("") : setActiveFilter(filter);
+  const pageAnimationVariants = {
+    initial: { x: "100%", opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: "-100%", opacity: 0 },
   };
 
   return (
     <AppContext.Provider
       value={{ closeActiveModal, isLoading, setActiveModal }}
     >
-      <GameLibraryContext.Provider value={{ gameLibrary }}>
+      <GameLibraryContext.Provider value={{ filteredGames }}>
         <CurrentUserContext.Provider
           value={{
             currentUser,
@@ -212,7 +262,23 @@ function App() {
             userWantsGame,
           }}
         >
-          <GameFilterContextProvider gameLibrary={searchedGameLibrary}>
+          <GameFilterContext.Provider
+            value={{
+              filterState,
+              isFilterActive,
+              isOptionActive,
+              onFilterOptionClick,
+              resetFilters,
+              getActiveFilterOptions,
+              getAllActiveFilterOptions,
+              getFilterTitle,
+              filterCount,
+              getActiveFilterCount,
+              setFilterMode,
+              filterGames,
+              customFilter,
+            }}
+          >
             <IsLoggedInContext.Provider value={{ isLoggedIn }}>
               <div className="page">
                 <Header
@@ -224,10 +290,30 @@ function App() {
                   activeFilter={activeFilter}
                 />
                 <div className="page__content">
-                  <Main
-                    onItemClick={onItemClick}
-                    onFilterModalClick={onFilterModalClick}
-                  />
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <Main
+                          onItemClick={onItemClick}
+                          onFilterModalClick={onFilterModalClick}
+                          pageAnimationVariants={pageAnimationVariants}
+                          isLoading={isLoading}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <Profile
+                          onItemClick={onItemClick}
+                          onFilterModalClick={onFilterModalClick}
+                          pageAnimationVariants={pageAnimationVariants}
+                        />
+                      }
+                    />
+                  </Routes>
+
                   <Footer />
                   <ItemModal isOpen={isOpen("item-modal")} item={currentItem} />
                   <FilterModal
@@ -246,12 +332,13 @@ function App() {
                     isOpen={isOpen("register-modal")}
                     onSignUp={onSignUp}
                     altButtonText="or Log In"
-                    handleAltButton={onLogin}
+                    handleAltButton={onLoginClick}
+                    closeActiveModal={closeActiveModal}
                   ></RegisterModal>
                 </div>
               </div>
             </IsLoggedInContext.Provider>
-          </GameFilterContextProvider>
+          </GameFilterContext.Provider>
         </CurrentUserContext.Provider>
       </GameLibraryContext.Provider>
     </AppContext.Provider>

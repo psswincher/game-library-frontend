@@ -10,7 +10,7 @@ export const useUserManager = (api) => {
   const [userWantedGames, setUserWantedGames] = useState([]);
 
   const handleUserLogin = (res) => {
-    // console.log("Logging in user", res);
+    console.log("Logging in user", res);
     const user = createUser(res);
     if (user && res.token) {
       setCurrentUser(user);
@@ -58,6 +58,9 @@ export const useUserManager = (api) => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setCurrentUser(nullUser);
+    setUserLikedGames([]);
+    setUserPlayedGames([]);
+    setUserWantedGames([]);
     removeToken();
   };
 
@@ -87,10 +90,9 @@ export const useUserManager = (api) => {
   };
 
   const createUser = (res) => {
-    if (res.name && res.avatar && res.email) {
+    if (res.name && res.email) {
       const user = {
         name: res.name,
-        avatar: res.avatar,
         email: res.email,
       };
       return user;
@@ -131,7 +133,6 @@ export const useUserManager = (api) => {
     userPlayedGame,
     userNotPlayedGame,
     userPlayedGames,
-
     userLikesGame,
     handleUserLogin,
     handleSignUp,

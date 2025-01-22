@@ -1,21 +1,23 @@
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import { motion, useAnimation } from "framer-motion";
+
 import "./Header.css";
 import filterIcon from "../../../assets/magnifyingIcon.svg";
-import { useGameFilters } from "../../../hooks/useGameFilter";
-import { motion, useAnimation } from "framer-motion";
+
 import UserInfo from "../UserInfo/UserInfo.jsx";
-// import FilterBar from "../FilterBar/FilterBar.jsx";
+
+import { GameFilterContext } from "../../../contexts/GameFilterContext.jsx";
 import { IsLoggedInContext } from "../../../contexts/IsLoggedInContext.jsx";
 import { CurrentUserContext } from "../../../contexts/CurrentUserContext.jsx";
+
 function Header({
   onProfileClick,
   onFilterModalClick,
   onSignUpClick,
   onLoginClick,
-  // onFilterClick,
-  // activeFilter,
 }) {
-  const { getActiveFilterCount } = useGameFilters();
+  const { getActiveFilterCount } = useContext(GameFilterContext);
   const controls = useAnimation();
   const { isLoggedIn } = useContext(IsLoggedInContext);
   const { currentUser } = useContext(CurrentUserContext);
@@ -43,7 +45,7 @@ function Header({
   }, [controls]);
 
   return (
-    <motion.header
+    <motion.nav
       className="header"
       animate={controls}
       initial={{ backgroundColor: "rgba(82, 31, 99, 1)" }}
@@ -61,14 +63,14 @@ function Header({
       <div className="header__container header__container_desktop">
         <div className="header__left">
           {/* <img className="header__logo" src={logo} /> */}
-          <div className="header__title">Home</div>
+          <Link to="/" className="header__link">
+            Library
+          </Link>
+          <Link to="/profile" className="header__link">
+            My Games
+          </Link>
         </div>
-        <div className="header__center">
-          {/* <FilterBar
-            onFilterClick={onFilterClick}
-            activeFilter={activeFilter}
-          /> */}
-        </div>
+        <div className="header__center"></div>
         <div className="header__right">
           {!isLoggedIn && (
             <button className="header__text-button" onClick={onSignUpClick}>
@@ -81,11 +83,7 @@ function Header({
             </button>
           )}
           {isLoggedIn && currentUser && (
-            <UserInfo
-              name={currentUser.name}
-              avatar={currentUser.avatar}
-              onClick={onProfileClick}
-            />
+            <UserInfo name={currentUser.name} onClick={onProfileClick} />
           )}
           <button
             className={`header__filter-button ${
@@ -105,7 +103,12 @@ function Header({
         </div>
       </div>
       <div className="header__container header__container_mobile">
-        <div className="header__title">Home</div>
+        <Link to="/" className="header__link">
+          Library
+        </Link>
+        <Link to="/profile" className="header__link">
+          My Games
+        </Link>
         <div className="header__right">
           {!isLoggedIn && (
             <button className="header__text-button" onClick={onSignUpClick}>
@@ -118,11 +121,7 @@ function Header({
             </button>
           )}
           {isLoggedIn && currentUser && (
-            <UserInfo
-              name={currentUser.name}
-              avatar={currentUser.avatar}
-              onClick={onProfileClick}
-            />
+            <UserInfo name={currentUser.name} onClick={onProfileClick} />
           )}
           <button
             className={`header__filter-button ${
@@ -141,7 +140,7 @@ function Header({
           </button>
         </div>
       </div>
-    </motion.header>
+    </motion.nav>
   );
 }
 

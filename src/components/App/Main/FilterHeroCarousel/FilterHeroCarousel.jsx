@@ -10,23 +10,24 @@ function FilterHeroCarousel() {
     useContext(GameFilterContext);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const heroFilters = filters.filter((filter) => {
+    return filter.heroFilter === true;
+  }, 0);
+
   const nextSlide = () => {
-    let newIndex = (currentIndex + 1) % filters.length;
-    while (!filters[newIndex].heroFilter) {
-      newIndex = (newIndex + 1) % filters.length;
-    }
+    const newIndex =
+      currentIndex + 1 > heroFilters.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
 
   const prevSlide = () => {
-    let newIndex = (currentIndex - 1 + filters.length) % filters.length;
-    while (!filters[newIndex].heroFilter) {
-      newIndex = (newIndex - 1 + filters.length) % filters.length;
-    }
+    const newIndex =
+      currentIndex - 1 < 0 ? heroFilters.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
-  const currentFilter = filters[currentIndex];
+  const currentFilter = heroFilters[currentIndex];
 
   return (
     <section className="filter-hero">
@@ -72,7 +73,11 @@ function FilterHeroCarousel() {
                 className="filter-hero__carousel-button filter-hero__carousel-button_prev"
                 onClick={prevSlide}
               >
-                <img className="filter-hero__arrow_prev" src={arrow}></img>
+                <img
+                  className="filter-hero__arrow_prev"
+                  src={arrow}
+                  alt="previous slide"
+                ></img>
               </button>
               <div className="filter-hero__filter-button-block">
                 {currentFilter.options.map((option) => {
@@ -103,7 +108,11 @@ function FilterHeroCarousel() {
                 }`}
                 onClick={nextSlide}
               >
-                <img className="filter-hero__arrow_next" src={arrow}></img>
+                <img
+                  className="filter-hero__arrow_next"
+                  src={arrow}
+                  alt="previous slide"
+                ></img>
               </button>
             </div>
           </motion.div>

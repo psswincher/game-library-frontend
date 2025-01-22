@@ -1,12 +1,16 @@
-import playersImage from "../assets/socialHall.jpg";
-import gameLengthImage from "../assets/game wall-2.jpg";
-import complexityImage from "../assets/calltoadventure.jpg";
-
+import playersImage from "../assets/socialhall.webp";
+import gameLengthImage from "../assets/game wall-2.webp";
+import complexityImage from "../assets/calltoadventure.webp";
 export const tempTokenKey = "jwt";
 
 export const apiInfo = {
-  baseUrl: "http://localhost:3001/",
+  baseUrl:
+    process.env.NODE_ENV === "production"
+      ? "https://api.gamelibtest.twilightparadox.com/"
+      : "http://localhost:3001/",
 };
+
+export const maxSectionCount = 50;
 
 export const initialFormValues = {
   addItem: {
@@ -77,6 +81,7 @@ export const filters = [
       "8 Players",
     ],
     gameKey: "playerCount",
+    heroFilter: true,
     heroImg: playersImage,
     heroSubtitle: "How many players are you gaming with?",
     buttonStyle: "default",

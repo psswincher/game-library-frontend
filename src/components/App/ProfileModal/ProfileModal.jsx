@@ -16,24 +16,12 @@ function ProfileModal({ isOpen, handleLogout }) {
   return (
     <Modal isOpen={isOpen}>
       <div className={styles.modal__content}>
-        <div className={styles.modal__top}>
-          {currentUser?.avatar ? (
-            <img className={styles.modal__image} src={currentUser.avatar} />
-          ) : (
-            <div className={styles["profile-modal__avatar-placeholder"]}>
-              Placeholder
-            </div>
-          )}
-        </div>
         <div className={styles.modal__bottom}>
           <div className={styles.modal__game_data}>
             <div className={styles.modal__game_baseData}>
               {currentUser?.name && currentUser.name}
-              {/* {item.category}, {item.complexity}, {item.gameLength} */}
             </div>
-            <div className={styles.modal__game_playerData}>
-              {/* {item.playerCountSlug} */}
-            </div>
+            <div className={styles.modal__game_playerData}></div>
           </div>
           <div className={styles.modal__buttons}>
             <button

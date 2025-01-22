@@ -18,14 +18,14 @@ function HeroItemCard({ item, onItemClick }) {
   };
 
   return (
-    <li className={`hero-item-card`} onClick={handleItemClick}>
+    <div className={`hero-item-card`} onClick={handleItemClick}>
       <div className="hero-item-card__content">
         <div className="hero-item-card__image">
-          <GameImage game={item} />
+          <GameImage game={item} size="large" />
         </div>
         <div className="hero-item-card__right">
           <div className="hero-item-card__title-bar">
-            <h2 className="hero-item-card__title">{item.name}</h2>
+            <h3 className="hero-item-card__title">{item.name}</h3>
             {isLoggedIn && (
               <div className="hero-item-card__interaction-bar">
                 <InteractionBar game={item} />
@@ -60,12 +60,12 @@ function HeroItemCard({ item, onItemClick }) {
             </div>
           </div>
           <div className="hero-item-card__descriptions">
-            <div className="hero-item-card__game-short-description">
+            <p className="hero-item-card__game-short-description">
               {item.shortDescription}
-            </div>
-            <div className="hero-item-card__game-full-description">
+            </p>
+            <p className="hero-item-card__game-full-description">
               {item.fullDescription}
-            </div>
+            </p>
           </div>
           <div className="hero-item-card__game_mechanics">
             {item.mechanics
@@ -85,7 +85,7 @@ function HeroItemCard({ item, onItemClick }) {
           </div>
         </div>
       </div>
-    </li>
+    </div>
   );
 }
 

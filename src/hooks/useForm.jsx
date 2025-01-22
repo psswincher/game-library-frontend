@@ -37,6 +37,14 @@ export function useForm(inputValues) {
     }));
   };
 
+  const clearErrors = () => {
+    setErrorMessages({});
+  };
+  const clearForm = () => {
+    clearErrors();
+    setTouchedFields({});
+  };
+
   //Keeping in case my cute affirmations aren't a direction I want to go in.
   // const clearError = (field) => {
   //   setErrorMessages((prevErrors) => ({
@@ -115,5 +123,6 @@ export function useForm(inputValues) {
     setValues,
     errorMessages,
     touchedFields,
+    clearForm,
   };
 }

@@ -1,24 +1,34 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { useContext, useState, useEffect, useMemo } from "react";
+
 import "./SectionTextItemCards.css";
-import { useGameFilters } from "../../../../hooks/useGameFilter";
+
+import { GameFilterContext } from "../../../../contexts/GameFilterContext";
+import { GameLibraryContext } from "../../../../contexts/GameLibraryContext";
+
 import NoGamesCard from "../NoGamesCard/NoGamesCard";
-import HeroItemCard from "../HeroItemCard/HeroItemCard";
-import ImageItemCard from "../ImageItemCard/ImageItemCard";
-import TextItemCard from "../TextItemCard/TextItemCard";
+import ItemCard from "../ItemCard/ItemCard";
+import Loading from "../../Loading/Loading";
 
-function SectionItemCards({ onItemClick, onFilterModalClick }) {
-  const { filteredGames } = useGameFilters();
+function SectionItemCards({
+  onItemClick,
+  onFilterModalClick,
+  sectionFilter,
+  isLoading,
+}) {
+  const { filteredGames } = useContext(GameLibraryContext);
+  const { customFilter } = useContext(GameFilterContext);
+  const [filteredSectionGames, setFilteredSectionGames] = useState([]);
 
-  const fetchCard = (item) => {
-    switch (item.cardType) {
-      case "HeroItemCard":
-        return <HeroItemCard item={item} onItemClick={onItemClick} />;
-      case "ImageItemCard":
-        return <ImageItemCard item={item} onItemClick={onItemClick} />;
-      default:
-        return <TextItemCard item={item} onItemClick={onItemClick} />;
-    }
-  };
+  const memoizedFilteredGames = useMemo(() => {
+    return sectionFilter
+      ? customFilter(filteredGames, sectionFilter)
+      : filteredGames;
+  }, [filteredGames, sectionFilter, customFilter]);
+
+  useEffect(() => {
+    setFilteredSectionGames(memoizedFilteredGames);
+  }, [memoizedFilteredGames]);
 
   const itemVariants = {
     hidden: {
@@ -54,34 +64,41 @@ function SectionItemCards({ onItemClick, onFilterModalClick }) {
 
   return (
     <section className="text-item-cards">
-      <motion.div className="text-item-cards__list">
+      <motion.ul className="text-item-cards__list">
+        {isLoading && <Loading />}
         <AnimatePresence mode="sync">
-          {filteredGames.length > 0
-            ? filteredGames.map((item) => {
-                const key = item._id;
+          {!isLoading &&
+            filteredSectionGames.length > 0 &&
+            filteredSectionGames.map((item) => {
+              const key = item._id;
+              return (
+                <motion.li
+                  key={key}
+                  layout="position"
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className={item.cardType}
+                >
+                  <ItemCard item={item} onItemClick={onItemClick} />
+                </motion.li>
+              );
+            })}
 
-                return (
-                  <motion.div
-                    key={key}
-                    layout="position"
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className={item.cardType}
-                  >
-                    {fetchCard(item)}
-                  </motion.div>
-                );
-              })
-            : ""}
+          {!isLoading && filteredSectionGames.length === 0 && (
+            <motion.li
+              key="no-games"
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <NoGamesCard onFilterModalClick={onFilterModalClick} />
+            </motion.li>
+          )}
         </AnimatePresence>
-        {filteredGames.length === 0 ? (
-          <NoGamesCard onFilterModalClick={onFilterModalClick} />
-        ) : (
-          ""
-        )}
-      </motion.div>
+      </motion.ul>
     </section>
   );
 }
