@@ -60,6 +60,9 @@ Because game data is drawn from an Airtable base and user data is solely stored 
 ## Framer Motion Animation
 
 Lightweight use of the Framer Motion library is used in this website to make navigation more pleasant and to highlight certain functionality:
-
 - the css grid layout of game cards is driven by framer motion to make filtering games in and out of the view fun
 - mechanics buttons have a one time entrance animation to demonstrate to the user that they are buttons
+
+## Future Implementation Goals
+* Add Google and Facebook authorization for user login
+* Add "Forgot Password" functionality
