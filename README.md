@@ -1,4 +1,5 @@
 # Game Library Browser - Frontend
+This project can be viewed [live at here](https://www.gamelibtest.twilightparadox.com/).
 
 This project's goal is to help users quickly and easily find a board game to play from among a collection of games. Users may:
 
