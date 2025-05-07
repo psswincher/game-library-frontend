@@ -70,7 +70,7 @@ function Header({
           /> */}
         </div>
         <div className="header__right">
-          {!isLoggedIn && (
+          {/* {!isLoggedIn && (
             <button className="header__text-button" onClick={onSignUpClick}>
               Sign Up
             </button>
@@ -86,7 +86,7 @@ function Header({
               avatar={currentUser.avatar}
               onClick={onProfileClick}
             />
-          )}
+          )} */}
           <button
             className={`header__filter-button ${
               getActiveFilterCount() > 0 && "header__filters-on"

@@ -6,6 +6,7 @@ import Button from "../Buttons/Button";
 import { GameFilterContext } from "../../../contexts/GameFilterContext";
 import InteractionBar from "../InteractionBar/InteractionBar";
 import { IsLoggedInContext } from "../../../contexts/IsLoggedInContext";
+import GameImagePlay from "../GameImagePlay/GameImagePlay";
 
 function ItemModal({ item, isOpen }) {
   const { onFilterOptionClick, isOptionActive } = useContext(GameFilterContext);
@@ -15,7 +16,8 @@ function ItemModal({ item, isOpen }) {
     <Modal isOpen={isOpen}>
       <div className={styles.modal__content}>
         <div className={styles.modal__top}>
-          <img className={styles.modal__image} src={item.imageUrl} />
+          <GameImagePlay imageUrl={item.imageUrl} howToPlayUrl={item.howToPlayUrl}/>
+          {/* <img className={styles.modal__image} src={item.imageUrl} /> */}
           <div className={styles["item-modal__top-info"]}>
             <h2 className={styles["item-modal__title"]}>{item.name}</h2>
             <div className={styles["item-modal__top-base-data"]}>
@@ -71,7 +73,7 @@ function ItemModal({ item, isOpen }) {
           <div className={styles.modal__game_fullDescription}>
             {item.fullDescription}
           </div>
-          {isLoggedIn && <InteractionBar game={item} />}
+          {/* {isLoggedIn && <InteractionBar game={item} />} */}
           <div className={styles.modal__game_publisher}></div>
           <div className={styles.modal__buttons}></div>
         </div>
